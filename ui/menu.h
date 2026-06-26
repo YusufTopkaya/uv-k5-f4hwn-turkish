@@ -165,15 +165,15 @@ extern const uint8_t FIRST_HIDDEN_MENU_ITEM;
 extern const t_menu_item MenuList[];
 
 extern const char        gSubMenu_TXP[8][7];
-extern const char        gSubMenu_SFT_D[3][4];
+extern const char        gSubMenu_SFT_D[3][8];
 extern const char        gSubMenu_W_N[2][7];
-extern const char        gSubMenu_OFF_ON[2][7];
+extern const char        gSubMenu_OFF_ON[2][8];
 extern const char        gSubMenu_NA[4];
 extern const char        gSubMenu_TOT[11][7];
 extern const char* const gSubMenu_RXMode[4];
 
 #ifdef ENABLE_VOICE
-    extern const char    gSubMenu_VOICE[3][4];
+    extern const char    gSubMenu_VOICE[3][8];
 #endif
 extern const char* const gSubMenu_MDF[4];
 #ifdef ENABLE_ALARM

@@ -191,18 +191,18 @@ const uint8_t FIRST_HIDDEN_MENU_ITEM = MENU_F_LOCK;
 const char gSubMenu_TXP[][7] =
 {
     "OZEL",
-    "DUS 1",
-    "DUS 2",
-    "DUS 3",
-    "DUS 4",
-    "DUS 5",
+    "DUSUK",
+    "DUSUK",
+    "DUSUK",
+    "DUSUK",
+    "DUSUK",
     "ORTA",
     "YUKSEK"
 };
 
-const char gSubMenu_SFT_D[][4] =
+const char gSubMenu_SFT_D[][8] =
 {
-    "KAP",
+    "KAPALI",
     "+",
     "-"
 };
@@ -213,10 +213,10 @@ const char gSubMenu_W_N[][7] =
     "DAR"
 };
 
-const char gSubMenu_OFF_ON[][7] =
+const char gSubMenu_OFF_ON[][8] =
 {
     "KAPALI",
-    "AC"
+    "ACIK"
 };
 
 const char gSubMenu_NA[4] =
@@ -233,9 +233,9 @@ const char* const gSubMenu_RXMode[] =
 };
 
 #ifdef ENABLE_VOICE
-    const char gSubMenu_VOICE[][4] =
+    const char gSubMenu_VOICE[][8] =
     {
-        "KAP",
+        "KAPALI",
         "CIN",
         "ING"
     };
@@ -269,7 +269,7 @@ const char gSubMenu_D_RSP[][11] =
 
 const char* const gSubMenu_PTT_ID[] =
 {
-    "KAP",
+    "KAPALI",
     "YUKARI\nKOD",
     "ASAGI\nKOD",
     "YUK+ASAGI\nKOD",
@@ -291,7 +291,7 @@ const char gSubMenu_PONMSG[][8] =
 
 const char gSubMenu_ROGER[][6] =
 {
-    "KAP",
+    "KAPALI",
     "ROGER",
     "MDC"
 };
@@ -325,7 +325,7 @@ const char * const gSubMenu_F_LOCK[] =
 
 const char gSubMenu_RX_TX[][6] =
 {
-    "KAP",
+    "KAPALI",
     "TX",
     "RX",
     "TX/RX"
@@ -348,7 +348,7 @@ const char gSubMenu_BATTYP[][9] =
 #ifndef ENABLE_FEAT_F4HWN
 const char gSubMenu_SCRAMBLER[][7] =
 {
-    "KAP",
+    "KAPALI",
     "2600Hz",
     "2700Hz",
     "2800Hz",
@@ -382,7 +382,7 @@ const char gSubMenu_SCRAMBLER[][7] =
 
     const char gSubMenu_SET_TOT[][7] =  // Use by SET_EOT too
     {
-        "KAP",
+        "KAPALI",
         "SES",
         "GORSEL",
         "TUM"
@@ -645,6 +645,10 @@ void UI_DisplayMenu(void)
             {
                 strcpy(String, gSubMenu_TXP[gSubMenuSelection]);
             }
+            else if(gSubMenuSelection >= 1 && gSubMenuSelection <= 5)
+            {
+                sprintf(String, "DUSUK %u\n%sW", gSubMenuSelection, gSubMenu_SET_PWR[gSubMenuSelection - 1]);
+            }
             else
             {
                 sprintf(String, "%s\n%sW", gSubMenu_TXP[gSubMenuSelection], gSubMenu_SET_PWR[gSubMenuSelection - 1]);
@@ -734,7 +738,7 @@ void UI_DisplayMenu(void)
             }
             else
             {
-                strcpy(String, "AC");
+                strcpy(String, "ACIK");
             }
 
             // Obsolete ???
@@ -1083,7 +1087,14 @@ void UI_DisplayMenu(void)
 
 #ifdef ENABLE_FEAT_F4HWN
         case MENU_SET_PWR:
-            sprintf(String, "%s\n%sW", gSubMenu_TXP[gSubMenuSelection + 1], gSubMenu_SET_PWR[gSubMenuSelection]);
+            if(gSubMenuSelection >= 0 && gSubMenuSelection <= 4)
+            {
+                sprintf(String, "DUSUK %u\n%sW", gSubMenuSelection + 1, gSubMenu_SET_PWR[gSubMenuSelection]);
+            }
+            else
+            {
+                sprintf(String, "%s\n%sW", gSubMenu_TXP[gSubMenuSelection + 1], gSubMenu_SET_PWR[gSubMenuSelection]);
+            }
             break;
     
         case MENU_SET_PTT:

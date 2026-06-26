@@ -1221,7 +1221,7 @@ void UI_DisplayMain(void)
             }
             else
             {
-                const char pwr_long[][7] = {"DUS1", "DUS2", "DUS3", "DUS4", "DUS5", "ORTA", "YUKSEK"};
+                const char pwr_long[][7] = {"DUSUK1", "DUSUK2", "DUSUK3", "DUSUK4", "DUSUK5", "ORTA", "YUKSEK"};
                 //sprintf(String, "%s", pwr_long[currentPower]);
                 //GUI_DisplaySmallest(String, 24, line == 0 ? 17 : 49, false, true);
                 GUI_DisplaySmallest(pwr_long[currentPower], 24, line == 0 ? 17 : 49, false, true);
@@ -1306,7 +1306,7 @@ void UI_DisplayMain(void)
             }
             else
             {
-                const char *bandWidthNames[] = {"WIDE", "NAR", "NAR+"};
+                const char *bandWidthNames[] = {"GENIS", "DAR", "DAR+"};
                 GUI_DisplaySmallest(bandWidthNames[vfoInfo->CHANNEL_BANDWIDTH + narrower], 91, line == 0 ? 17 : 49, false, true);
             }
         #else
@@ -1317,7 +1317,7 @@ void UI_DisplayMain(void)
             }
             else
             {
-                const char *bandWidthNames[] = {"WIDE", "NAR"};
+                const char *bandWidthNames[] = {"GENIS", "DAR"};
                 GUI_DisplaySmallest(bandWidthNames[vfoInfo->CHANNEL_BANDWIDTH], 91, line == 0 ? 17 : 49, false, true);
             }
         #endif
