@@ -46,34 +46,34 @@ const t_menu_item MenuList[] =
 {
 //   text,          menu ID
     {"Adim",        MENU_STEP          },
-    {"Guc",       MENU_TXP           }, // was "TXP"
+    {"TXGucu",    MENU_TXP           }, // was "TXP"
     {"RxDCS",       MENU_R_DCS         }, // was "R_DCS"
     {"RxCTCS",      MENU_R_CTCS        }, // was "R_CTCS"
     {"TxDCS",       MENU_T_DCS         }, // was "T_DCS"
     {"TxCTCS",      MENU_T_CTCS        }, // was "T_CTCS"
-    {"TxODir",      MENU_SFT_D         }, // was "SFT_D"
+    {"TxOfsetYon",  MENU_SFT_D         }, // was "SFT_D"
     {"Ofset",      MENU_OFFSET        }, // was "OFFSET"
-    {"Bant",        MENU_W_N           },
+    {"BantGenis",   MENU_W_N           },
 #ifndef ENABLE_FEAT_F4HWN
-    {"Karist",      MENU_SCR           }, // was "SCR"
+    {"Karistirici", MENU_SCR           }, // was "SCR"
 #endif
-    {"Mesgul",      MENU_BCL           }, // was "BCL"
-    {"Compnd",      MENU_COMPAND       },
-    {"Mod",        MENU_AM            }, // was "AM"
+    {"MesgulKilit", MENU_BCL           }, // was "BCL"
+    {"Kompander",   MENU_COMPAND       },
+    {"Modulasyon", MENU_AM            }, // was "AM"
 #ifdef ENABLE_FEAT_F4HWN
-    {"TXKil",      MENU_TX_LOCK       }, 
+    {"TXKiliti",   MENU_TX_LOCK       }, 
 #endif
-    {"Ekle1",       MENU_S_ADD1        },
-    {"Ekle2",       MENU_S_ADD2        },
-    {"Ekle3",       MENU_S_ADD3        },
+    {"ListeyeEkle1", MENU_S_ADD1        },
+    {"ListeyeEkle2", MENU_S_ADD2        },
+    {"ListeyeEkle3", MENU_S_ADD3        },
     {"Kaydet",      MENU_MEM_CH        }, // was "MEM-CH"
     {"Sil",      MENU_DEL_CH        }, // was "DEL-CH"
-    {"Isim",      MENU_MEM_NAME      },
+    {"KanalIsmi", MENU_MEM_NAME      },
 
-    {"Liste",       MENU_S_LIST        },
-    {"Liste1",      MENU_SLIST1        },
-    {"Liste2",      MENU_SLIST2        },
-    {"Liste3",      MENU_SLIST3        },
+    {"TaramaList",  MENU_S_LIST        },
+    {"TaramaList1", MENU_SLIST1        },
+    {"TaramaList2", MENU_SLIST2        },
+    {"TaramaList3", MENU_SLIST3        },
     {"Tarama",      MENU_SC_REV        },
 #ifndef ENABLE_FEAT_F4HWN
     #ifdef ENABLE_NOAA
@@ -86,46 +86,46 @@ const t_menu_item MenuList[] =
     {"F2Uzun",      MENU_F2LONG        },
     {"MUzun",       MENU_MLONG         },
 
-    {"Kilit",      MENU_AUTOLK        }, // was "AUTOLk"
-    {"TXSure",      MENU_TOT           }, // was "TOT"
-    {"PilTas",      MENU_SAVE          }, // was "SAVE"
-    {"PilGor",      MENU_BAT_TXT       },
-    {"Mik",         MENU_MIC           },
-    {"MicBar",      MENU_MIC_BAR       },
-    {"KanGor",      MENU_MDF           }, // was "MDF"
-    {"Acilis",      MENU_PONMSG        },
-    {"BLZmn",      MENU_ABR           }, // was "ABR"
-    {"BLMin",       MENU_ABR_MIN       },
-    {"BLMax",       MENU_ABR_MAX       },
-    {"BLTxRx",      MENU_ABR_ON_TX_RX  },
-    {"Bip",        MENU_BEEP          },
+    {"OtoKilit",   MENU_AUTOLK        }, // was "AUTOLk"
+    {"TXSuresi",    MENU_TOT           }, // was "TOT"
+    {"PilTasarruf", MENU_SAVE          }, // was "SAVE"
+    {"PilGostergesi", MENU_BAT_TXT       },
+    {"Mikrofon",    MENU_MIC           },
+    {"MikrofonBar", MENU_MIC_BAR       },
+    {"KanalGorunumu", MENU_MDF           }, // was "MDF"
+    {"AcilisEkrani", MENU_PONMSG        },
+    {"ArkaIsikZaman", MENU_ABR           }, // was "ABR"
+    {"ArkaIsikMin", MENU_ABR_MIN       },
+    {"ArkaIsikMax", MENU_ABR_MAX       },
+    {"ArkaIsikTxRx", MENU_ABR_ON_TX_RX  },
+    {"TusSesi",    MENU_BEEP          },
 #ifdef ENABLE_VOICE
-    {"Ses",       MENU_VOICE         },
+    {"SesDili",   MENU_VOICE         },
 #endif
-    {"Roger",       MENU_ROGER         },
-    {"STE",         MENU_STE           },
-    {"RP STE",      MENU_RP_STE        },
-    {"1 Ara",      MENU_1_CALL        },
+    {"RogerBeep",   MENU_ROGER         },
+    {"KuyrukKes",   MENU_STE           },
+    {"TersKuyruk",  MENU_RP_STE        },
+    {"TekKanalAra", MENU_1_CALL        },
 #ifdef ENABLE_ALARM
-    {"Alarm",      MENU_AL_MOD        },
+    {"AlarmModu",  MENU_AL_MOD        },
 #endif
 #ifdef ENABLE_DTMF_CALLING
     {"ANI ID",      MENU_ANI_ID        },
 #endif
-    {"YukKod",      MENU_UPCODE        },
-    {"AsaKod",      MENU_DWCODE        },
+    {"YukariKod",   MENU_UPCODE        },
+    {"AsagiKod",    MENU_DWCODE        },
     {"PTT ID",      MENU_PTT_ID        },
-    {"D Dur",       MENU_D_ST          },
+    {"DTMFDurum",   MENU_D_ST          },
 #ifdef ENABLE_DTMF_CALLING
-    {"DCevap",      MENU_D_RSP         },
-    {"DBekle",      MENU_D_HOLD        },
+    {"DTMFCevap",   MENU_D_RSP         },
+    {"DTMFBekle",   MENU_D_HOLD        },
 #endif
-    {"DGecik",      MENU_D_PRE         },
+    {"DTMFGecik",   MENU_D_PRE         },
 #ifdef ENABLE_DTMF_CALLING
-    {"DKodCo",      MENU_D_DCD         },
-    {"DListe",      MENU_D_LIST        },
+    {"DTMFKodCo",   MENU_D_DCD         },
+    {"DTMFListe",   MENU_D_LIST        },
 #endif
-    {"DCanli",      MENU_D_LIVE_DEC    }, // live DTMF decoder
+    {"DTMFCanli",   MENU_D_LIVE_DEC    }, // live DTMF decoder
 #ifndef ENABLE_FEAT_F4HWN
     #ifdef ENABLE_AM_FIX
         {"AM Fix",      MENU_AM_FIX        },
@@ -133,34 +133,34 @@ const t_menu_item MenuList[] =
 #endif
     {"VOX",         MENU_VOX           },
 #ifdef ENABLE_FEAT_F4HWN
-    {"Sistem",      MENU_VOL           }, // was "VOL"
+    {"SistemBilgi", MENU_VOL           }, // was "VOL"
 #else
-    {"PilVol",      MENU_VOL           }, // was "VOL"
+    {"PilVoltaji",  MENU_VOL           }, // was "VOL"
 #endif
     {"RXModu",      MENU_TDR           },
-    {"Sql",         MENU_SQL           },
+    {"Susturma",    MENU_SQL           },
 #ifdef ENABLE_FEAT_F4HWN
-    {"SetGuc",      MENU_SET_PWR       },
-    {"SetPTT",      MENU_SET_PTT       },
-    {"SetTOT",      MENU_SET_TOT       },
-    {"SetEOT",      MENU_SET_EOT       },
-    {"SetKon",      MENU_SET_CTR       },
-    {"SetTrs",      MENU_SET_INV       },
-    {"SetKil",      MENU_SET_LCK       },
-    {"SetMet",      MENU_SET_MET       },
-    {"SetGUI",      MENU_SET_GUI       },
-    {"SetZmn",      MENU_SET_TMR       },
+    {"GucAyar",     MENU_SET_PWR       },
+    {"PTTAyar",     MENU_SET_PTT       },
+    {"TXSureAyar",  MENU_SET_TOT       },
+    {"EOTUyari",    MENU_SET_EOT       },
+    {"KontrastAyar", MENU_SET_CTR       },
+    {"TersAyar",    MENU_SET_INV       },
+    {"KilitAyar",   MENU_SET_LCK       },
+    {"MetreAyar",   MENU_SET_MET       },
+    {"ArayuzAyar",  MENU_SET_GUI       },
+    {"ZamanAyar",   MENU_SET_TMR       },
 #ifdef ENABLE_FEAT_F4HWN_SLEEP
-    {"SetKpt",       MENU_SET_OFF      },
+    {"UykuAyar",     MENU_SET_OFF      },
 #endif
 #ifdef ENABLE_FEAT_F4HWN_NARROWER
-    {"SetNFM",      MENU_SET_NFM       },
+    {"NFMAyar",     MENU_SET_NFM       },
 #endif
 #ifdef ENABLE_FEAT_F4HWN_VOL
-    {"SetSes",      MENU_SET_VOL       },
+    {"SesAyar",     MENU_SET_VOL       },
 #endif
 #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
-    {"SetKey",      MENU_SET_KEY       },
+    {"TusAyar",     MENU_SET_KEY       },
 #endif
 #ifdef ENABLE_NOAA
     {"SetNWR",      MENU_NOAA_S    },
@@ -168,22 +168,22 @@ const t_menu_item MenuList[] =
 #endif
     // hidden menu items from here on
     // enabled if pressing both the PTT and upper side button at power-on
-    {"FKilit",      MENU_F_LOCK        },
+    {"FrekansKilit", MENU_F_LOCK        },
 #ifndef ENABLE_FEAT_F4HWN
     {"Tx 200",      MENU_200TX         }, // was "200TX"
     {"Tx 350",      MENU_350TX         }, // was "350TX"
     {"Tx 500",      MENU_500TX         }, // was "500TX"
 #endif
-    {"350 Ac",      MENU_350EN         }, // was "350EN"
+    {"350MHzAc",    MENU_350EN         }, // was "350EN"
 #ifndef ENABLE_FEAT_F4HWN
-    {"KarAc",       MENU_SCREN         }, // was "SCREN"
+    {"KaristiriciAc", MENU_SCREN         }, // was "SCREN"
 #endif
 #ifdef ENABLE_F_CAL_MENU
-    {"FrKal",       MENU_F_CALI        }, // referans kristal kalibrasyonu
+    {"FrekansKal",  MENU_F_CALI        }, // referans kristal kalibrasyonu
 #endif
-    {"PilKal",      MENU_BATCAL        }, // battery voltage calibration
-    {"PilTip",      MENU_BATTYP        }, // battery type 1600/2200mAh
-    {"Sifir",       MENU_RESET         }, // might be better to move this to the hidden menu items ?
+    {"PilKalibrasyon", MENU_BATCAL        }, // battery voltage calibration
+    {"PilTipi",     MENU_BATTYP        }, // battery type 1600/2200mAh
+    {"FabrikaSifir", MENU_RESET         }, // might be better to move this to the hidden menu items ?
 
     {"",                              0xff               }  // end of list - DO NOT delete or move this this
 };
@@ -495,32 +495,18 @@ char    edit_original[17]; // a copy of the text before editing so that we can e
 char    edit[17];
 int     edit_index;
 
-/* Draw a menu label in the left panel.  If the label is longer than the panel
- * width, it scrolls horizontally so the full text can be read.  The panel is
- * clipped to avoid overwriting the vertical separator / right-hand area. */
-static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t PanelWidth)
+/* Draw one instance of a menu label at the given pixel offset, clipping to the
+ * left panel.  A negative offset shifts the text left; parts falling outside
+ * PanelWidth are simply not drawn. */
+static void UI_PrintMenuLabelAt(const char *pString, uint8_t Line, uint8_t PanelWidth, int Offset)
 {
     const uint8_t char_width = 7;
     const uint8_t char_pitch = 8;
     const size_t  len        = strlen(pString);
-    const unsigned int total_width = len * char_pitch;
-
-    if (total_width <= PanelWidth)
-    {
-        UI_PrintString(pString, 0, 0, Line, char_pitch);
-        return;
-    }
-
-    const int max_offset = total_width - PanelWidth;
-    const uint16_t step_period = 20;              // one pixel step every ~200 ms
-    const int pos = (int)((gFlashLightBlinkCounter / step_period) % (2 * max_offset));
-    int offset = pos;
-    if (offset > max_offset)
-        offset = 2 * max_offset - offset;         // bounce back
 
     for (size_t i = 0; i < len; i++)
     {
-        int x = (int)(i * char_pitch) - offset;
+        int x = (int)(i * char_pitch) - Offset;
         if (x >= PanelWidth || x + char_width <= 0)
             continue;
         if (pString[i] <= ' ' || pString[i] >= 127)
@@ -545,6 +531,44 @@ static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t P
         memcpy(gFrameBuffer[Line + 0] + dst, &gFontBig[index][0] + src, copy_width);
         memcpy(gFrameBuffer[Line + 1] + dst, &gFontBig[index][7] + src, copy_width);
     }
+}
+
+/* Small-font label for the adjacent items in the custom menu layout.
+ * Long labels are simply truncated to the number of characters that fit. */
+static void UI_PrintMenuLabelSmallClip(const char *pString, uint8_t Line, uint8_t PanelWidth)
+{
+    const uint8_t char_pitch = 6; // small font width (5) + 1 spacing
+    const size_t  max_chars  = PanelWidth / char_pitch;
+    char buf[16];
+    size_t len = strlen(pString);
+    if (len > max_chars)
+        len = max_chars;
+    memcpy(buf, pString, len);
+    buf[len] = '\0';
+    UI_PrintStringSmallNormal(buf, 0, 0, Line);
+}
+
+/* HTML-marquee-style continuous left scroll.  The text moves steadily left,
+ * disappears, then re-enters from the right after a small gap. */
+static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t PanelWidth)
+{
+    const uint8_t char_pitch = 8;
+    const size_t  len        = strlen(pString);
+    const unsigned int total_width = len * char_pitch;
+
+    if (total_width <= PanelWidth)
+    {
+        UI_PrintMenuLabelAt(pString, Line, PanelWidth, 0);
+        return;
+    }
+
+    const int gap = 16;                           // blank gap before re-entry
+    const int max_offset = total_width + gap;     // loop length
+    const uint16_t step_period = 15;              // one pixel step every ~150 ms
+    const int offset = (int)((gFlashLightBlinkCounter / step_period) % max_offset);
+
+    UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset);
+    UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset - total_width - gap);
 }
 
 void UI_DisplayMenu(void)
@@ -576,10 +600,7 @@ void UI_DisplayMenu(void)
     for (i = 0; i < 3; i++)
         if (gMenuCursor > 0 || i > 0)
             if ((gMenuListCount - 1) != gMenuCursor || i != 2)
-                if (i == 1)
-                    UI_PrintMenuLabelScroll(MenuList[gMenuCursor + i - 1].name, i * 2, 8 * menu_list_width);
-                else
-                    UI_PrintString(MenuList[gMenuCursor + i - 1].name, 0, 0, i * 2, 8);
+                UI_PrintMenuLabelScroll(MenuList[gMenuCursor + i - 1].name, i * 2, 8 * menu_list_width);
 
     // invert the current menu list item pixels
     for (i = 0; i < (8 * menu_list_width); i++)
@@ -611,9 +632,9 @@ void UI_DisplayMenu(void)
             {   // leading menu items - small text
                 const int k = menu_index + i - 2;
                 if (k < 0)
-                    UI_PrintStringSmallNormal(MenuList[gMenuListCount + k].name, 0, 0, i);  // wrap-a-round
+                    UI_PrintMenuLabelSmallClip(MenuList[gMenuListCount + k].name, i, 8 * menu_list_width);  // wrap-a-round
                 else if (k >= 0 && k < (int)gMenuListCount)
-                    UI_PrintStringSmallNormal(MenuList[k].name, 0, 0, i);
+                    UI_PrintMenuLabelSmallClip(MenuList[k].name, i, 8 * menu_list_width);
                 i++;
             }
 
@@ -626,9 +647,9 @@ void UI_DisplayMenu(void)
             {   // trailing menu item - small text
                 const int k = menu_index + i - 2;
                 if (k >= 0 && k < (int)gMenuListCount)
-                    UI_PrintStringSmallNormal(MenuList[k].name, 0, 0, 1 + i);
+                    UI_PrintMenuLabelSmallClip(MenuList[k].name, 1 + i, 8 * menu_list_width);
                 else if (k >= (int)gMenuListCount)
-                    UI_PrintStringSmallNormal(MenuList[gMenuListCount - k].name, 0, 0, 1 + i);  // wrap-a-round
+                    UI_PrintMenuLabelSmallClip(MenuList[gMenuListCount - k].name, 1 + i, 8 * menu_list_width);  // wrap-a-round
                 i++;
             }
 
