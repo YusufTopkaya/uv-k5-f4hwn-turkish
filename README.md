@@ -9,6 +9,7 @@ Bu proje, [armel/uv-k5-firmware-custom](https://github.com/armel/uv-k5-firmware-
 - Açılış ekranına **tam ekran Türk bayrağı** logosu eklendi (Power-On Message **TÜM** modunda).
 - Menülerde açılabilen kısaltmalar mümkün olan en uzun Türkçe karşılıklarıyla değiştirildi.
 - Birden fazla yerde kullanılan tüm kelimeler tek merkezi tabloda (`ui/strings.h` / `ui/strings.c`) toplanarak dinamik referansla kullanılıyor; böylece çeviri tutarlılığı artırıldı ve gereksiz tekrar azaltıldı.
+- Sol menü paneline sığmayan uzun etiketler artık **kayan yazı** ile gösteriliyor; metin yavaşça kayarak tamamı okunabiliyor.
 
 > [!NOTE]
 > Radyonun LCD fontu yalnızca 7-bit ASCII karakterleri desteklediği için Türkçe karakterler (ç, ğ, ı, ö, ş, ü, İ) ASCII karşılıklarıyla yazılmıştır. Örneğin:
@@ -46,16 +47,16 @@ LCD ekrandaki sınırlı alan yüzünden bazı kelimeler hâlâ kısaltılmışt
 |---------|----------|
 | `Adim` | Kanal adımı |
 | `Guc` | TX gücü |
-| `AlDCS` / `AlCTCS` | Alıcı DCS / CTCSS kodu |
-| `VerDCS` / `VerCTC` | Verici DCS / CTCSS kodu |
-| `VerYon` | Verici ofset yönü (Shift Direction) |
+| `RxDCS` / `RxCTCS` | Alıcı DCS / CTCSS kodu |
+| `TxDCS` / `TxCTCS` | Verici DCS / CTCSS kodu |
+| `TxODir` | Verici ofset yönü (Shift Direction) |
 | `Ofset` | Frekans ofseti |
 | `Bant` | Bant genişliği (Wide / Narrow) |
 | `Karist` | Karıştırıcı (Scrambler) |
 | `Mesgul` | Meşgul kanal kilidi (Busy Channel Lockout) |
-| `Sikist` | Sıkıştırıcı (Compander) |
+| `Compnd` | Sıkıştırıcı / açıcı (Compander) |
 | `Mod` | Modülasyon (AM/FM) |
-| `VerKil` | Verici kilidi |
+| `TXKil` | TX kilidi |
 | `Ekle1` / `Ekle2` / `Ekle3` | Tarama listesine ekleme |
 | `Kaydet` / `Sil` | Kanalı kaydet / sil |
 | `Isim` | Kanal ismi |
@@ -88,7 +89,7 @@ LCD ekrandaki sınırlı alan yüzünden bazı kelimeler hâlâ kısaltılmışt
 | `YukKod` / `AsaKod` | Yukarı / Aşağı DTMF kodu |
 | `PTT ID` | PTT tanıtma kimliği |
 | `VOX` | Sesle tetikleme |
-| `AlModu` | Alıcı modu (RX Mode) |
+| `RXModu` | RX modu (RX Mode) |
 | `Sql` | Squelch (parazit kısma) |
 | `SetGuc` | Güç seviyesi ayarı |
 | `SetPTT` | PTT modu ayarı |
@@ -102,7 +103,7 @@ LCD ekrandaki sınırlı alan yüzünden bazı kelimeler hâlâ kısaltılmışt
 | `SetKpt` | Uyku gecikmesi ayarı |
 | `SetNFM` | Dar bant (NFM) ayarı |
 | `FKilit` | Frekans kilidi (F Lock) |
-| `Ver200` / `Ver350` / `Ver500` | 200 / 350 / 500 MHz TX izni |
+| `Tx 200` / `Tx 350` / `Tx 500` | 200 / 350 / 500 MHz TX izni |
 | `350 Ac` | 350 MHz bandı açma |
 | `KarAc` | Karıştırıcıyı açma |
 | `FrKal` | Frekans kalibrasyonu |
@@ -165,6 +166,15 @@ Yeni eklenen dosyalar:
 - `ui/strings.c` – Bu metinlerin tanımları.
 
 Bu tablo sayesinde `KAPALI`, `ACIK`, `YOK`, `TUM`, `TARA`, `DUSUK`, `ORTA`, `YUKSEK`, `GENIS`, `DAR`, `SES`, `GUC`, `MOD`, `PTT`, `VFO`, `RX`, `TX`, `GOZLEM`, `KARIS` gibi birden fazla ekranda geçen kelimeler tek noktadan yönetilir. `Makefile`'a `ui/strings.o` eklendi.
+
+## Kayan menü etiketleri
+
+Sol menü paneli 6 büyük karakterlik (`48 piksel`) bir alana sahip. Bu alana sığmayan etiketler için `ui/menu.c`'de `UI_PrintMenuLabelScroll()` fonksiyonu eklendi.
+
+- Seçili menü öğesinin etiketi panelden uzunsa metin yavaşça sağa kayar, sona ulaştığında geri döner.
+- Kayma hızı yaklaşık **200 ms**'de bir piksel olarak ayarlanmıştır.
+- Sola/sağa git-gel (ping-pong) yaparak hem başlangıcı hem sonunu okumak mümkündür.
+- Kısa etiketler eskisi gibi sabit kalır.
 
 ## Türk bayrağı logosu
 

@@ -34,6 +34,7 @@
 #ifdef ENABLE_FEAT_F4HWN
     #include "../version.h"
 #endif
+#include "font.h"
 #include "helper.h"
 #include "inputbox.h"
 #include "menu.h"
@@ -46,21 +47,21 @@ const t_menu_item MenuList[] =
 //   text,          menu ID
     {"Adim",        MENU_STEP          },
     {"Guc",       MENU_TXP           }, // was "TXP"
-    {"AlDCS",       MENU_R_DCS         }, // was "R_DCS"
-    {"AlCTCS",      MENU_R_CTCS        }, // was "R_CTCS"
-    {"VerDCS",      MENU_T_DCS         }, // was "T_DCS"
-    {"VerCTC",      MENU_T_CTCS        }, // was "T_CTCS"
-    {"VerYon",      MENU_SFT_D         }, // was "SFT_D"
+    {"RxDCS",       MENU_R_DCS         }, // was "R_DCS"
+    {"RxCTCS",      MENU_R_CTCS        }, // was "R_CTCS"
+    {"TxDCS",       MENU_T_DCS         }, // was "T_DCS"
+    {"TxCTCS",      MENU_T_CTCS        }, // was "T_CTCS"
+    {"TxODir",      MENU_SFT_D         }, // was "SFT_D"
     {"Ofset",      MENU_OFFSET        }, // was "OFFSET"
     {"Bant",        MENU_W_N           },
 #ifndef ENABLE_FEAT_F4HWN
     {"Karist",      MENU_SCR           }, // was "SCR"
 #endif
     {"Mesgul",      MENU_BCL           }, // was "BCL"
-    {"Sikist",      MENU_COMPAND       },
+    {"Compnd",      MENU_COMPAND       },
     {"Mod",        MENU_AM            }, // was "AM"
 #ifdef ENABLE_FEAT_F4HWN
-    {"VerKil",      MENU_TX_LOCK       }, 
+    {"TXKil",      MENU_TX_LOCK       }, 
 #endif
     {"Ekle1",       MENU_S_ADD1        },
     {"Ekle2",       MENU_S_ADD2        },
@@ -136,7 +137,7 @@ const t_menu_item MenuList[] =
 #else
     {"PilVol",      MENU_VOL           }, // was "VOL"
 #endif
-    {"AlModu",      MENU_TDR           },
+    {"RXModu",      MENU_TDR           },
     {"Sql",         MENU_SQL           },
 #ifdef ENABLE_FEAT_F4HWN
     {"SetGuc",      MENU_SET_PWR       },
@@ -169,9 +170,9 @@ const t_menu_item MenuList[] =
     // enabled if pressing both the PTT and upper side button at power-on
     {"FKilit",      MENU_F_LOCK        },
 #ifndef ENABLE_FEAT_F4HWN
-    {"Ver200",      MENU_200TX         }, // was "200TX"
-    {"Ver350",      MENU_350TX         }, // was "350TX"
-    {"Ver500",      MENU_500TX         }, // was "500TX"
+    {"Tx 200",      MENU_200TX         }, // was "200TX"
+    {"Tx 350",      MENU_350TX         }, // was "350TX"
+    {"Tx 500",      MENU_500TX         }, // was "500TX"
 #endif
     {"350 Ac",      MENU_350EN         }, // was "350EN"
 #ifndef ENABLE_FEAT_F4HWN
@@ -494,6 +495,58 @@ char    edit_original[17]; // a copy of the text before editing so that we can e
 char    edit[17];
 int     edit_index;
 
+/* Draw a menu label in the left panel.  If the label is longer than the panel
+ * width, it scrolls horizontally so the full text can be read.  The panel is
+ * clipped to avoid overwriting the vertical separator / right-hand area. */
+static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t PanelWidth)
+{
+    const uint8_t char_width = 7;
+    const uint8_t char_pitch = 8;
+    const size_t  len        = strlen(pString);
+    const unsigned int total_width = len * char_pitch;
+
+    if (total_width <= PanelWidth)
+    {
+        UI_PrintString(pString, 0, 0, Line, char_pitch);
+        return;
+    }
+
+    const int max_offset = total_width - PanelWidth;
+    const uint16_t step_period = 20;              // one pixel step every ~200 ms
+    const int pos = (int)((gFlashLightBlinkCounter / step_period) % (2 * max_offset));
+    int offset = pos;
+    if (offset > max_offset)
+        offset = 2 * max_offset - offset;         // bounce back
+
+    for (size_t i = 0; i < len; i++)
+    {
+        int x = (int)(i * char_pitch) - offset;
+        if (x >= PanelWidth || x + char_width <= 0)
+            continue;
+        if (pString[i] <= ' ' || pString[i] >= 127)
+            continue;
+
+        const unsigned int index = pString[i] - ' ' - 1;
+        int src = 0;
+        int dst = x;
+        int copy_width = char_width;
+
+        if (dst < 0)
+        {
+            src = -dst;
+            copy_width += dst;
+            dst = 0;
+        }
+        if (dst + copy_width > PanelWidth)
+            copy_width = PanelWidth - dst;
+        if (copy_width <= 0)
+            continue;
+
+        memcpy(gFrameBuffer[Line + 0] + dst, &gFontBig[index][0] + src, copy_width);
+        memcpy(gFrameBuffer[Line + 1] + dst, &gFontBig[index][7] + src, copy_width);
+    }
+}
+
 void UI_DisplayMenu(void)
 {
     const unsigned int menu_list_width = 6; // max no. of characters on the menu list (left side)
@@ -523,7 +576,10 @@ void UI_DisplayMenu(void)
     for (i = 0; i < 3; i++)
         if (gMenuCursor > 0 || i > 0)
             if ((gMenuListCount - 1) != gMenuCursor || i != 2)
-                UI_PrintString(MenuList[gMenuCursor + i - 1].name, 0, 0, i * 2, 8);
+                if (i == 1)
+                    UI_PrintMenuLabelScroll(MenuList[gMenuCursor + i - 1].name, i * 2, 8 * menu_list_width);
+                else
+                    UI_PrintString(MenuList[gMenuCursor + i - 1].name, 0, 0, i * 2, 8);
 
     // invert the current menu list item pixels
     for (i = 0; i < (8 * menu_list_width); i++)
@@ -563,7 +619,7 @@ void UI_DisplayMenu(void)
 
             // current menu item - keep big n fat
             if (menu_index >= 0 && menu_index < (int)gMenuListCount)
-                UI_PrintString(MenuList[menu_index].name, 0, 0, 2, 8);
+                UI_PrintMenuLabelScroll(MenuList[menu_index].name, 2, 8 * menu_list_width);
             i++;
 
             while (i < 4)
@@ -585,7 +641,7 @@ void UI_DisplayMenu(void)
         else if (menu_index >= 0 && menu_index < (int)gMenuListCount)
         {   // current menu item
 //          strcat(String, ":");
-            UI_PrintString(MenuList[menu_index].name, 0, 0, 0, 8);
+            UI_PrintMenuLabelScroll(MenuList[menu_index].name, 0, 8 * menu_list_width);
 //          UI_PrintStringSmallNormal(String, 0, 0, 0);
         }
 
