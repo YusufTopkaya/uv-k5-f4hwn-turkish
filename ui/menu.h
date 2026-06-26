@@ -112,6 +112,8 @@ enum
     #endif
 #endif
     MENU_RESET,
+    MENU_LOGO_ANIM,
+    MENU_LOGO_ANIM_SPEED,
     MENU_F_LOCK,
 #ifndef ENABLE_FEAT_F4HWN
     MENU_200TX,
@@ -202,6 +204,10 @@ extern const char* const gSubMenu_PTT_ID[5];
     extern const char * const gSubMenu_PONMSG[5];
 #else
     extern const char * const gSubMenu_PONMSG[4];
+#endif
+#ifdef ENABLE_FEAT_F4HWN
+    extern const char * const gSubMenu_LOGO_ANIM[2];
+    extern const char * const gSubMenu_LOGO_ANIM_SPEED[2];
 #endif
 extern const char * const gSubMenu_ROGER[3];
 extern const char * const gSubMenu_RESET[2];

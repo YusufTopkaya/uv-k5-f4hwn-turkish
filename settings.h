@@ -233,6 +233,8 @@ typedef struct {
     ALARM_Mode_t      ALARM_MODE;
 #endif
     POWER_OnDisplayMode_t POWER_ON_DISPLAY_MODE;
+    uint8_t               POWER_ON_LOGO_ANIMATION;   // 0 = off, 1 = on
+    uint8_t               POWER_ON_LOGO_ANIM_SPEED;  // 0 = slow, 1 = fast
     ROGER_Mode_t          ROGER;
     uint8_t               REPEATER_TAIL_TONE_ELIMINATION;
     uint8_t               KEY_1_SHORT_PRESS_ACTION;

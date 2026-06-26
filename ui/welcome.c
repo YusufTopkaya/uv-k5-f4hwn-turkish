@@ -157,16 +157,27 @@ void UI_DisplayWelcome(void)
 #ifdef ENABLE_FEAT_F4HWN
         if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_ALL)
         {
-            // Fade the boot logo in, then give it a gentle pulse, leaving it
-            // fully visible for the rest of the boot delay.
-            const uint8_t fade_levels[] = {0, 1, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4};
+            const uint16_t frame_delay_ms = gEeprom.POWER_ON_LOGO_ANIM_SPEED ? 80 : 200;
 
-            for (uint8_t i = 0; i < ARRAY_SIZE(fade_levels); i++)
+            if (gEeprom.POWER_ON_LOGO_ANIMATION == 0)
             {
-                UI_DrawLogoWithFade(fade_levels[i]);
+                // Animation disabled: show the logo fully lit immediately.
+                UI_DrawLogoWithFade(4);
                 ST7565_BlitStatusLine();
-                ST7565_BlitFullScreen();
-                SYSTEM_DelayMs(120);
+            }
+            else
+            {
+                // Fade the boot logo in, then give it a gentle pulse, leaving it
+                // fully visible for the rest of the boot delay.
+                const uint8_t fade_levels[] = {0, 1, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4};
+
+                for (uint8_t i = 0; i < ARRAY_SIZE(fade_levels); i++)
+                {
+                    UI_DrawLogoWithFade(fade_levels[i]);
+                    ST7565_BlitStatusLine();
+                    ST7565_BlitFullScreen();
+                    SYSTEM_DelayMs(frame_delay_ms);
+                }
             }
         }
         else

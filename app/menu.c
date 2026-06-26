@@ -189,6 +189,16 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
             *pMax = ARRAY_SIZE(gSubMenu_PONMSG) - 1;
             break;
 
+#ifdef ENABLE_FEAT_F4HWN
+        case MENU_LOGO_ANIM:
+            *pMax = ARRAY_SIZE(gSubMenu_LOGO_ANIM) - 1;
+            break;
+
+        case MENU_LOGO_ANIM_SPEED:
+            *pMax = ARRAY_SIZE(gSubMenu_LOGO_ANIM_SPEED) - 1;
+            break;
+#endif
+
         case MENU_R_DCS:
         case MENU_T_DCS:
             //*pMin = 0;
@@ -784,7 +794,33 @@ void MENU_AcceptSetting(void)
 #endif
         case MENU_PONMSG:
             gEeprom.POWER_ON_DISPLAY_MODE = gSubMenuSelection;
+
+            // Show/hide the logo-animation settings depending on the selected mode.
+            {
+                const uint8_t old_visible = gMenuVisibleCount;
+                gMenuVisibleCount = gMenuListCount;
+                if (gEeprom.POWER_ON_DISPLAY_MODE != POWER_ON_DISPLAY_MODE_ALL)
+                    gMenuVisibleCount -= 2;
+
+                // If the cursor is now beyond the last visible item, clamp it.
+                if (gMenuCursor >= gMenuVisibleCount)
+                    gMenuCursor = (gMenuVisibleCount > 0) ? gMenuVisibleCount - 1 : 0;
+
+                // Force a full redraw so hidden items disappear immediately.
+                if (old_visible != gMenuVisibleCount)
+                    gRequestDisplayScreen = DISPLAY_MENU;
+            }
             break;
+
+#ifdef ENABLE_FEAT_F4HWN
+        case MENU_LOGO_ANIM:
+            gEeprom.POWER_ON_LOGO_ANIMATION = gSubMenuSelection;
+            break;
+
+        case MENU_LOGO_ANIM_SPEED:
+            gEeprom.POWER_ON_LOGO_ANIM_SPEED = gSubMenuSelection;
+            break;
+#endif
 
         case MENU_ROGER:
             gEeprom.ROGER = gSubMenuSelection;
@@ -1260,6 +1296,16 @@ void MENU_ShowCurrentSetting(void)
             gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
             break;
 
+#ifdef ENABLE_FEAT_F4HWN
+        case MENU_LOGO_ANIM:
+            gSubMenuSelection = gEeprom.POWER_ON_LOGO_ANIMATION;
+            break;
+
+        case MENU_LOGO_ANIM_SPEED:
+            gSubMenuSelection = gEeprom.POWER_ON_LOGO_ANIM_SPEED;
+            break;
+#endif
+
         case MENU_ROGER:
             gSubMenuSelection = gEeprom.ROGER;
             break;
@@ -1469,14 +1515,14 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
                 Value = (gInputBox[0] * 10) + gInputBox[1];
 
-                if (Value > 0 && Value <= gMenuListCount)
+                if (Value > 0 && Value <= gMenuVisibleCount)
                 {
                     gMenuCursor         = Value - 1;
                     gFlagRefreshSetting = true;
                     return;
                 }
 
-                if (Value <= gMenuListCount)
+                if (Value <= gMenuVisibleCount)
                     break;
 
                 gInputBox[0]   = gInputBox[1];
@@ -1484,7 +1530,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
                 [[fallthrough]];
             case 1:
                 Value = gInputBox[0];
-                if (Value > 0 && Value <= gMenuListCount)
+                if (Value > 0 && Value <= gMenuVisibleCount)
                 {
                     gMenuCursor         = Value - 1;
                     gFlagRefreshSetting = true;
@@ -1887,7 +1933,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction)
 
     if (!gIsInSubMenu)
     {
-        gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, -Direction, 0, gMenuListCount - 1);
+        gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, -Direction, 0, gMenuVisibleCount - 1);
 
         gFlagRefreshSetting = true;
 

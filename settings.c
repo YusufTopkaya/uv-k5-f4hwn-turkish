@@ -168,6 +168,8 @@ void SETTINGS_InitEEPROM(void)
             gEeprom.S9_LEVEL = 76;
         }
     #endif
+    gEeprom.POWER_ON_LOGO_ANIMATION = (Data[3] < 2) ? Data[3] : 1;
+    gEeprom.POWER_ON_LOGO_ANIM_SPEED = (Data[4] < 2) ? Data[4] : 1;
 
     // 0EA8..0EAF
     EEPROM_ReadBuffer(0x0EA8, Data, 8);
@@ -689,6 +691,8 @@ void SETTINGS_SaveSettings(void)
     State[1] = gEeprom.S0_LEVEL;
     State[2] = gEeprom.S9_LEVEL;
 #endif
+    State[3] = gEeprom.POWER_ON_LOGO_ANIMATION;
+    State[4] = gEeprom.POWER_ON_LOGO_ANIM_SPEED;
     EEPROM_WriteBuffer(0x0EA0, State);
 
 

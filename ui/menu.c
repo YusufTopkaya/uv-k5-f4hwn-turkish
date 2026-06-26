@@ -166,6 +166,10 @@ const t_menu_item MenuList[] =
     {"SetNWR",      MENU_NOAA_S    },
 #endif
 #endif
+#ifdef ENABLE_FEAT_F4HWN
+    {"LogoAnim",    MENU_LOGO_ANIM       },
+    {"LogoHiz",     MENU_LOGO_ANIM_SPEED },
+#endif
     // hidden menu items from here on
     // enabled if pressing both the PTT and upper side button at power-on
     {"FrekansKilit", MENU_F_LOCK        },
@@ -290,6 +294,20 @@ const char * const gSubMenu_PONMSG[] =
     STR_VOLTAJ,
     STR_YOK
 };
+
+#ifdef ENABLE_FEAT_F4HWN
+const char * const gSubMenu_LOGO_ANIM[] =
+{
+    STR_KAPALI,
+    STR_ACIK
+};
+
+const char * const gSubMenu_LOGO_ANIM_SPEED[] =
+{
+    "YAVAS",
+    "HIZLI"
+};
+#endif
 
 const char * const gSubMenu_ROGER[] =
 {
@@ -629,7 +647,7 @@ void UI_DisplayMenu(void)
         // original menu layout
     for (i = 0; i < 3; i++)
         if (gMenuCursor > 0 || i > 0)
-            if ((gMenuListCount - 1) != gMenuCursor || i != 2)
+            if ((gMenuVisibleCount - 1) != gMenuCursor || i != 2)
                 UI_PrintMenuLabelScroll(MenuList[gMenuCursor + i - 1].name, i * 2, 8 * menu_list_width);
 
     // invert the current menu list item pixels
@@ -648,7 +666,7 @@ void UI_DisplayMenu(void)
         memcpy(gFrameBuffer[0] + (8 * menu_list_width) + 1, BITMAP_CurrentIndicator, sizeof(BITMAP_CurrentIndicator));
 
     // draw the menu index number/count
-    sprintf(String, "%2u.%u", 1 + gMenuCursor, gMenuListCount);
+    sprintf(String, "%2u.%u", 1 + gMenuCursor, gMenuVisibleCount);
 
     UI_PrintStringSmallNormal(String, 2, 0, 6);
 
@@ -662,34 +680,34 @@ void UI_DisplayMenu(void)
             {   // leading menu items - small text
                 const int k = menu_index + i - 2;
                 if (k < 0)
-                    UI_PrintMenuLabelSmallClip(MenuList[gMenuListCount + k].name, i, 8 * menu_list_width);  // wrap-a-round
-                else if (k >= 0 && k < (int)gMenuListCount)
+                    UI_PrintMenuLabelSmallClip(MenuList[gMenuVisibleCount + k].name, i, 8 * menu_list_width);  // wrap-a-round
+                else if (k >= 0 && k < (int)gMenuVisibleCount)
                     UI_PrintMenuLabelSmallClip(MenuList[k].name, i, 8 * menu_list_width);
                 i++;
             }
 
             // current menu item - keep big n fat
-            if (menu_index >= 0 && menu_index < (int)gMenuListCount)
+            if (menu_index >= 0 && menu_index < (int)gMenuVisibleCount)
                 UI_PrintMenuLabelScroll(MenuList[menu_index].name, 2, 8 * menu_list_width);
             i++;
 
             while (i < 4)
             {   // trailing menu item - small text
                 const int k = menu_index + i - 2;
-                if (k >= 0 && k < (int)gMenuListCount)
+                if (k >= 0 && k < (int)gMenuVisibleCount)
                     UI_PrintMenuLabelSmallClip(MenuList[k].name, 1 + i, 8 * menu_list_width);
-                else if (k >= (int)gMenuListCount)
-                    UI_PrintMenuLabelSmallClip(MenuList[gMenuListCount - k].name, 1 + i, 8 * menu_list_width);  // wrap-a-round
+                else if (k >= (int)gMenuVisibleCount)
+                    UI_PrintMenuLabelSmallClip(MenuList[gMenuVisibleCount - k].name, 1 + i, 8 * menu_list_width);  // wrap-a-round
                 i++;
             }
 
             // draw the menu index number/count
 #ifndef ENABLE_FEAT_F4HWN
-            sprintf(String, "%2u.%u", 1 + gMenuCursor, gMenuListCount);
+            sprintf(String, "%2u.%u", 1 + gMenuCursor, gMenuVisibleCount);
             UI_PrintStringSmallNormal(String, 2, 0, 6);
 #endif
         }
-        else if (menu_index >= 0 && menu_index < (int)gMenuListCount)
+        else if (menu_index >= 0 && menu_index < (int)gMenuVisibleCount)
         {   // current menu item
 //          strcat(String, ":");
             UI_PrintMenuLabelScroll(MenuList[menu_index].name, 0, 8 * menu_list_width);
@@ -697,7 +715,7 @@ void UI_DisplayMenu(void)
         }
 
 #ifdef ENABLE_FEAT_F4HWN
-        sprintf(String, "%02u/%u", 1 + gMenuCursor, gMenuListCount);
+        sprintf(String, "%02u/%u", 1 + gMenuCursor, gMenuVisibleCount);
         UI_PrintStringSmallNormal(String, 6, 0, 6);
 #endif
     }
@@ -1107,6 +1125,16 @@ void UI_DisplayMenu(void)
         case MENU_PONMSG:
             strcpy(String, gSubMenu_PONMSG[gSubMenuSelection]);
             break;
+
+#ifdef ENABLE_FEAT_F4HWN
+        case MENU_LOGO_ANIM:
+            strcpy(String, gSubMenu_LOGO_ANIM[gSubMenuSelection]);
+            break;
+
+        case MENU_LOGO_ANIM_SPEED:
+            strcpy(String, gSubMenu_LOGO_ANIM_SPEED[gSubMenuSelection]);
+            break;
+#endif
 
         case MENU_ROGER:
             strcpy(String, gSubMenu_ROGER[gSubMenuSelection]);
