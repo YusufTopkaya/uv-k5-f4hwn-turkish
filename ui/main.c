@@ -71,12 +71,12 @@ const int8_t dBmCorrTable[7] = {
 
 const char *VfoStateStr[] = {
        [VFO_STATE_NORMAL]="",
-       [VFO_STATE_BUSY]="BUSY",
-       [VFO_STATE_BAT_LOW]="BAT LOW",
-       [VFO_STATE_TX_DISABLE]="TX DISABLE",
-       [VFO_STATE_TIMEOUT]="TIMEOUT",
+       [VFO_STATE_BUSY]="MESGUL",
+       [VFO_STATE_BAT_LOW]="PIL DUSUK",
+       [VFO_STATE_TX_DISABLE]="TX KAPALI",
+       [VFO_STATE_TIMEOUT]="SURE DOLDU",
        [VFO_STATE_ALARM]="ALARM",
-       [VFO_STATE_VOLTAGE_HIGH]="VOLT HIGH"
+       [VFO_STATE_VOLTAGE_HIGH]="VOLTAJ YUKSEK"
 };
 
 // ***************************************************************************
@@ -535,7 +535,7 @@ void UI_DisplayMain(void)
     UI_DisplayClear();
 
     if(gLowBattery && !gLowBatteryConfirmed) {
-        UI_DisplayPopup("LOW BATTERY");
+        UI_DisplayPopup("PIL DUSUK");
         ST7565_BlitFullScreen();
         return;
     }
@@ -543,8 +543,8 @@ void UI_DisplayMain(void)
 #ifndef ENABLE_FEAT_F4HWN
     if (gEeprom.KEY_LOCK && gKeypadLocked > 0)
     {   // tell user how to unlock the keyboard
-        UI_PrintString("Long press #", 0, LCD_WIDTH, 1, 8);
-        UI_PrintString("to unlock",    0, LCD_WIDTH, 3, 8);
+        UI_PrintString("UZUN BAS #", 0, LCD_WIDTH, 1, 8);
+        UI_PrintString("KILIT AC",    0, LCD_WIDTH, 3, 8);
         ST7565_BlitFullScreen();
         return;
     }
@@ -565,7 +565,7 @@ void UI_DisplayMain(void)
             shift = 5;
         }
         //memcpy(gFrameBuffer[shift] + 2, gFontKeyLock, sizeof(gFontKeyLock));
-        UI_PrintStringSmallBold("UNLOCK KEYBOARD", 12, 0, shift);
+        UI_PrintStringSmallBold("KILIDI AC", 12, 0, shift);
         //memcpy(gFrameBuffer[shift] + 120, gFontKeyLock, sizeof(gFontKeyLock));
 
         /*
@@ -1221,7 +1221,7 @@ void UI_DisplayMain(void)
             }
             else
             {
-                const char pwr_long[][5] = {"LOW1", "LOW2", "LOW3", "LOW4", "LOW5", "MID", "HIGH"};
+                const char pwr_long[][7] = {"DUS1", "DUS2", "DUS3", "DUS4", "DUS5", "ORTA", "YUKSEK"};
                 //sprintf(String, "%s", pwr_long[currentPower]);
                 //GUI_DisplaySmallest(String, 24, line == 0 ? 17 : 49, false, true);
                 GUI_DisplaySmallest(pwr_long[currentPower], 24, line == 0 ? 17 : 49, false, true);

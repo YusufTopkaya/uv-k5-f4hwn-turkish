@@ -43,36 +43,36 @@
 const t_menu_item MenuList[] =
 {
 //   text,          menu ID
-    {"Step",        MENU_STEP          },
-    {"Power",       MENU_TXP           }, // was "TXP"
+    {"Adim",        MENU_STEP          },
+    {"Guc",       MENU_TXP           }, // was "TXP"
     {"RxDCS",       MENU_R_DCS         }, // was "R_DCS"
     {"RxCTCS",      MENU_R_CTCS        }, // was "R_CTCS"
     {"TxDCS",       MENU_T_DCS         }, // was "T_DCS"
     {"TxCTCS",      MENU_T_CTCS        }, // was "T_CTCS"
     {"TxODir",      MENU_SFT_D         }, // was "SFT_D"
-    {"TxOffs",      MENU_OFFSET        }, // was "OFFSET"
+    {"Ofset",      MENU_OFFSET        }, // was "OFFSET"
     {"W/N",         MENU_W_N           },
 #ifndef ENABLE_FEAT_F4HWN
     {"Scramb",      MENU_SCR           }, // was "SCR"
 #endif
     {"BusyCL",      MENU_BCL           }, // was "BCL"
     {"Compnd",      MENU_COMPAND       },
-    {"Mode",        MENU_AM            }, // was "AM"
+    {"Mod",        MENU_AM            }, // was "AM"
 #ifdef ENABLE_FEAT_F4HWN
-    {"TXLock",      MENU_TX_LOCK       }, 
+    {"TXKil",      MENU_TX_LOCK       }, 
 #endif
     {"ScAdd1",      MENU_S_ADD1        },
     {"ScAdd2",      MENU_S_ADD2        },
     {"ScAdd3",      MENU_S_ADD3        },
-    {"ChSave",      MENU_MEM_CH        }, // was "MEM-CH"
-    {"ChDele",      MENU_DEL_CH        }, // was "DEL-CH"
-    {"ChName",      MENU_MEM_NAME      },
+    {"Kaydet",      MENU_MEM_CH        }, // was "MEM-CH"
+    {"Sil",      MENU_DEL_CH        }, // was "DEL-CH"
+    {"Isim",      MENU_MEM_NAME      },
 
-    {"SList",       MENU_S_LIST        },
+    {"Liste",       MENU_S_LIST        },
     {"SList1",      MENU_SLIST1        },
     {"SList2",      MENU_SLIST2        },
     {"SList3",      MENU_SLIST3        },
-    {"ScnRev",      MENU_SC_REV        },
+    {"Tarama",      MENU_SC_REV        },
 #ifndef ENABLE_FEAT_F4HWN
     #ifdef ENABLE_NOAA
         {"NOAA-S",      MENU_NOAA_S    },
@@ -82,30 +82,30 @@ const t_menu_item MenuList[] =
     {"F1Long",      MENU_F1LONG        },
     {"F2Shrt",      MENU_F2SHRT        },
     {"F2Long",      MENU_F2LONG        },
-    {"M Long",      MENU_MLONG         },
+    {"M Uzun",      MENU_MLONG         },
 
-    {"KeyLck",      MENU_AUTOLK        }, // was "AUTOLk"
-    {"TxTOut",      MENU_TOT           }, // was "TOT"
-    {"BatSav",      MENU_SAVE          }, // was "SAVE"
-    {"BatTxt",      MENU_BAT_TXT       },
-    {"Mic",         MENU_MIC           },
+    {"Kilit",      MENU_AUTOLK        }, // was "AUTOLk"
+    {"TXSure",      MENU_TOT           }, // was "TOT"
+    {"PilTas",      MENU_SAVE          }, // was "SAVE"
+    {"PilGor",      MENU_BAT_TXT       },
+    {"Mik",         MENU_MIC           },
     {"MicBar",      MENU_MIC_BAR       },
-    {"ChDisp",      MENU_MDF           }, // was "MDF"
-    {"POnMsg",      MENU_PONMSG        },
-    {"BLTime",      MENU_ABR           }, // was "ABR"
+    {"KanGor",      MENU_MDF           }, // was "MDF"
+    {"AcMes",      MENU_PONMSG        },
+    {"BLZmn",      MENU_ABR           }, // was "ABR"
     {"BLMin",       MENU_ABR_MIN       },
     {"BLMax",       MENU_ABR_MAX       },
     {"BLTxRx",      MENU_ABR_ON_TX_RX  },
-    {"Beep",        MENU_BEEP          },
+    {"Bip",        MENU_BEEP          },
 #ifdef ENABLE_VOICE
-    {"Voice",       MENU_VOICE         },
+    {"Ses",       MENU_VOICE         },
 #endif
     {"Roger",       MENU_ROGER         },
     {"STE",         MENU_STE           },
     {"RP STE",      MENU_RP_STE        },
-    {"1 Call",      MENU_1_CALL        },
+    {"1 Ara",      MENU_1_CALL        },
 #ifdef ENABLE_ALARM
-    {"AlarmT",      MENU_AL_MOD        },
+    {"Alarm",      MENU_AL_MOD        },
 #endif
 #ifdef ENABLE_DTMF_CALLING
     {"ANI ID",      MENU_ANI_ID        },
@@ -123,7 +123,7 @@ const t_menu_item MenuList[] =
     {"D Decd",      MENU_D_DCD         },
     {"D List",      MENU_D_LIST        },
 #endif
-    {"D Live",      MENU_D_LIVE_DEC    }, // live DTMF decoder
+    {"DCanli",      MENU_D_LIVE_DEC    }, // live DTMF decoder
 #ifndef ENABLE_FEAT_F4HWN
     #ifdef ENABLE_AM_FIX
         {"AM Fix",      MENU_AM_FIX        },
@@ -131,23 +131,23 @@ const t_menu_item MenuList[] =
 #endif
     {"VOX",         MENU_VOX           },
 #ifdef ENABLE_FEAT_F4HWN
-    {"SysInf",      MENU_VOL           }, // was "VOL"
+    {"Sistem",      MENU_VOL           }, // was "VOL"
 #else
-    {"BatVol",      MENU_VOL           }, // was "VOL"
+    {"PilVol",      MENU_VOL           }, // was "VOL"
 #endif
-    {"RxMode",      MENU_TDR           },
+    {"RXModu",      MENU_TDR           },
     {"Sql",         MENU_SQL           },
 #ifdef ENABLE_FEAT_F4HWN
-    {"SetPwr",      MENU_SET_PWR       },
+    {"SetGuc",      MENU_SET_PWR       },
     {"SetPTT",      MENU_SET_PTT       },
     {"SetTOT",      MENU_SET_TOT       },
     {"SetEOT",      MENU_SET_EOT       },
-    {"SetCtr",      MENU_SET_CTR       },
-    {"SetInv",      MENU_SET_INV       },
-    {"SetLck",      MENU_SET_LCK       },
+    {"SetKon",      MENU_SET_CTR       },
+    {"SetTrs",      MENU_SET_INV       },
+    {"SetKil",      MENU_SET_LCK       },
     {"SetMet",      MENU_SET_MET       },
     {"SetGUI",      MENU_SET_GUI       },
-    {"SetTmr",      MENU_SET_TMR       },
+    {"SetZmn",      MENU_SET_TMR       },
 #ifdef ENABLE_FEAT_F4HWN_SLEEP
     {"SetOff",       MENU_SET_OFF      },
 #endif
@@ -155,7 +155,7 @@ const t_menu_item MenuList[] =
     {"SetNFM",      MENU_SET_NFM       },
 #endif
 #ifdef ENABLE_FEAT_F4HWN_VOL
-    {"SetVol",      MENU_SET_VOL       },
+    {"SetSes",      MENU_SET_VOL       },
 #endif
 #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
     {"SetKey",      MENU_SET_KEY       },
@@ -179,44 +179,44 @@ const t_menu_item MenuList[] =
 #ifdef ENABLE_F_CAL_MENU
     {"FrCali",      MENU_F_CALI        }, // reference xtal calibration
 #endif
-    {"BatCal",      MENU_BATCAL        }, // battery voltage calibration
-    {"BatTyp",      MENU_BATTYP        }, // battery type 1600/2200mAh
-    {"Reset",       MENU_RESET         }, // might be better to move this to the hidden menu items ?
+    {"PilKal",      MENU_BATCAL        }, // battery voltage calibration
+    {"PilTip",      MENU_BATTYP        }, // battery type 1600/2200mAh
+    {"Sifir",       MENU_RESET         }, // might be better to move this to the hidden menu items ?
 
     {"",                              0xff               }  // end of list - DO NOT delete or move this this
 };
 
 const uint8_t FIRST_HIDDEN_MENU_ITEM = MENU_F_LOCK;
 
-const char gSubMenu_TXP[][6] =
+const char gSubMenu_TXP[][7] =
 {
-    "USER",
-    "LOW 1",
-    "LOW 2",
-    "LOW 3",
-    "LOW 4",
-    "LOW 5",
-    "MID",
-    "HIGH"
+    "OZEL",
+    "DUS 1",
+    "DUS 2",
+    "DUS 3",
+    "DUS 4",
+    "DUS 5",
+    "ORTA",
+    "YUKSEK"
 };
 
 const char gSubMenu_SFT_D[][4] =
 {
-    "OFF",
+    "KAP",
     "+",
     "-"
 };
 
 const char gSubMenu_W_N[][7] =
 {
-    "WIDE",
-    "NARROW"
+    "GENIS",
+    "DAR"
 };
 
 const char gSubMenu_OFF_ON[][4] =
 {
-    "OFF",
-    "ON"
+    "KAP",
+    "AC"
 };
 
 const char gSubMenu_NA[4] =
@@ -226,72 +226,72 @@ const char gSubMenu_NA[4] =
 
 const char* const gSubMenu_RXMode[] =
 {
-    "MAIN\nONLY",       // TX and RX on main only
-    "DUAL RX\nRESPOND", // Watch both and respond
-    "CROSS\nBAND",      // TX on main, RX on secondary
-    "MAIN TX\nDUAL RX"  // always TX on main, but RX on both
+    "ANA\nTEK",       // TX and RX on main only
+    "CIFT RX\nYANIT", // Watch both and respond
+    "CAPRAZ\nBANT",      // TX on main, RX on secondary
+    "ANA TX\nCIFT RX"  // always TX on main, but RX on both
 };
 
 #ifdef ENABLE_VOICE
     const char gSubMenu_VOICE[][4] =
     {
-        "OFF",
-        "CHI",
-        "ENG"
+        "KAP",
+        "CIN",
+        "ING"
     };
 #endif
 
 const char* const gSubMenu_MDF[] =
 {
-    "FREQ",
-    "CHANNEL\nNUMBER",
-    "NAME",
-    "NAME\n+\nFREQ"
+    "FREKANS",
+    "KANAL\nNO",
+    "ISIM",
+    "ISIM\n+\nFREKANS"
 };
 
 #ifdef ENABLE_ALARM
     const char gSubMenu_AL_MOD[][5] =
     {
-        "SITE",
-        "TONE"
+        "YER",
+        "TON"
     };
 #endif
 
 #ifdef ENABLE_DTMF_CALLING
 const char gSubMenu_D_RSP[][11] =
 {
-    "DO\nNOTHING",
-    "RING",
-    "REPLY",
-    "BOTH"
+    "HICBIR\nSEY",
+    "CAL",
+    "YANIT",
+    "IKISI"
 };
 #endif
 
 const char* const gSubMenu_PTT_ID[] =
 {
-    "OFF",
-    "UP CODE",
-    "DOWN CODE",
-    "UP+DOWN\nCODE",
+    "KAP",
+    "YUKARI\nKOD",
+    "ASAGI\nKOD",
+    "YUK+ASAGI\nKOD",
     "APOLLO\nQUINDAR"
 };
 
 const char gSubMenu_PONMSG[][8] =
 {
 #ifdef ENABLE_FEAT_F4HWN
-    "ALL",
-    "SOUND",
+    "TUM",
+    "SES",
 #else
-    "FULL",
+    "TUM",
 #endif
-    "MESSAGE",
-    "VOLTAGE",
-    "NONE"
+    "MESAJ",
+    "VOLTAJ",
+    "YOK"
 };
 
 const char gSubMenu_ROGER[][6] =
 {
-    "OFF",
+    "KAP",
     "ROGER",
     "MDC"
 };
@@ -299,7 +299,7 @@ const char gSubMenu_ROGER[][6] =
 const char gSubMenu_RESET[][4] =
 {
     "VFO",
-    "ALL"
+    "TUM"
 };
 
 const char * const gSubMenu_F_LOCK[] =
@@ -319,13 +319,13 @@ const char * const gSubMenu_F_LOCK[] =
 #ifdef ENABLE_FEAT_F4HWN_GMRS_FRS_MURS
     "GMRS\nFRS\nMURS",
 #endif
-    "DISABLE\nALL",
-    "UNLOCK\nALL",
+    "TUMUNU\nKAPAT",
+    "TUMUNU\nAC",
 };
 
 const char gSubMenu_RX_TX[][6] =
 {
-    "OFF",
+    "KAP",
     "TX",
     "RX",
     "TX/RX"
@@ -333,9 +333,9 @@ const char gSubMenu_RX_TX[][6] =
 
 const char gSubMenu_BAT_TXT[][8] =
 {
-    "NONE",
-    "VOLTAGE",
-    "PERCENT"
+    "YOK",
+    "VOLTAJ",
+    "YUZDE"
 };
 
 const char gSubMenu_BATTYP[][9] =
@@ -348,7 +348,7 @@ const char gSubMenu_BATTYP[][9] =
 #ifndef ENABLE_FEAT_F4HWN
 const char gSubMenu_SCRAMBLER[][7] =
 {
-    "OFF",
+    "KAP",
     "2600Hz",
     "2700Hz",
     "2800Hz",
@@ -376,35 +376,35 @@ const char gSubMenu_SCRAMBLER[][7] =
 
     const char gSubMenu_SET_PTT[][8] =
     {
-        "CLASSIC",
-        "ONEPUSH"
+        "KLASIK",
+        "TEK BAS"
     };
 
     const char gSubMenu_SET_TOT[][7] =  // Use by SET_EOT too
     {
-        "OFF",
-        "SOUND",
-        "VISUAL",
-        "ALL"
+        "KAP",
+        "SES",
+        "GORSEL",
+        "TUM"
     };
 
     const char gSubMenu_SET_LCK[][9] =
     {
-        "KEYS",
-        "KEYS+PTT"
+        "TUS",
+        "TUS+PTT"
     };
 
     const char gSubMenu_SET_MET[][8] =
     {
-        "TINY",
-        "CLASSIC"
+        "KUCUK",
+        "KLASIK"
     };
 
     #ifdef ENABLE_FEAT_F4HWN_NARROWER
         const char gSubMenu_SET_NFM[][9] =
         {
-            "NARROW",
-            "NARROWER"
+            "DAR",
+            "DAHA DAR"
         };
     #endif
 
@@ -422,13 +422,13 @@ const char gSubMenu_SCRAMBLER[][7] =
 
 const t_sidefunction gSubMenu_SIDEFUNCTIONS[] =
 {
-    {"NONE",            ACTION_OPT_NONE},
+    {"YOK",            ACTION_OPT_NONE},
 #ifdef ENABLE_FLASHLIGHT
-    {"FLASH\nLIGHT",    ACTION_OPT_FLASHLIGHT},
+    {"FENER",    ACTION_OPT_FLASHLIGHT},
 #endif
-    {"POWER",           ACTION_OPT_POWER},
-    {"MONITOR",         ACTION_OPT_MONITOR},
-    {"SCAN",            ACTION_OPT_SCAN},
+    {"GUC",           ACTION_OPT_POWER},
+    {"GOZLEM",         ACTION_OPT_MONITOR},
+    {"TARA",            ACTION_OPT_SCAN},
 #ifdef ENABLE_VOX
     {"VOX",             ACTION_OPT_VOX},
 #endif
@@ -436,7 +436,7 @@ const t_sidefunction gSubMenu_SIDEFUNCTIONS[] =
     {"ALARM",           ACTION_OPT_ALARM},
 #endif
 #ifdef ENABLE_FMRADIO
-    {"FM RADIO",        ACTION_OPT_FM},
+    {"FM RADYO",        ACTION_OPT_FM},
 #endif
 #ifdef ENABLE_TX1750
     {"1750Hz",          ACTION_OPT_1750},
@@ -445,24 +445,24 @@ const t_sidefunction gSubMenu_SIDEFUNCTIONS[] =
     {"REGA\nALARM",     ACTION_OPT_REGA_ALARM},
     {"REGA\nTEST",      ACTION_OPT_REGA_TEST},
 #endif
-    {"LOCK\nKEYPAD",    ACTION_OPT_KEYLOCK},
+    {"KILIT",    ACTION_OPT_KEYLOCK},
     {"VFO A\nVFO B",    ACTION_OPT_A_B},
-    {"VFO\nMEM",        ACTION_OPT_VFO_MR},
-    {"MODE",            ACTION_OPT_SWITCH_DEMODUL},
+    {"VFO\nKANAL",        ACTION_OPT_VFO_MR},
+    {"MOD",            ACTION_OPT_SWITCH_DEMODUL},
 #ifdef ENABLE_BLMIN_TMP_OFF
-    {"BLMIN\nTMP OFF",  ACTION_OPT_BLMIN_TMP_OFF},      //BackLight Minimum Temporay OFF
+    {"BLMIN\nGEC KAP",  ACTION_OPT_BLMIN_TMP_OFF},      //BackLight Minimum Temporay OFF
 #endif
 #ifdef ENABLE_FEAT_F4HWN
-    {"RX MODE",         ACTION_OPT_RXMODE},
-    {"MAIN ONLY",       ACTION_OPT_MAINONLY},
+    {"RX MODU",         ACTION_OPT_RXMODE},
+    {"ANA\nTEK",       ACTION_OPT_MAINONLY},
     {"PTT",             ACTION_OPT_PTT},
-    {"WIDE\nNARROW",    ACTION_OPT_WN},
+    {"GENIS\nDAR",    ACTION_OPT_WN},
     #if !defined(ENABLE_SPECTRUM) || !defined(ENABLE_FMRADIO)
-    {"MUTE",            ACTION_OPT_MUTE},
+    {"SESSIZ",            ACTION_OPT_MUTE},
     #endif
     #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
-        {"POWER\nHIGH",    ACTION_OPT_POWER_HIGH},
-        {"REMOVE\nOFFSET",  ACTION_OPT_REMOVE_OFFSET},
+        {"YUKSEK\nGUC",    ACTION_OPT_POWER_HIGH},
+        {"OFSETI\nKALDIR",  ACTION_OPT_REMOVE_OFFSET},
     #endif
 #endif
 };
@@ -734,7 +734,7 @@ void UI_DisplayMenu(void)
             }
             else
             {
-                strcpy(String, "ON");
+                strcpy(String, "AC");
             }
 
             // Obsolete ???
@@ -899,7 +899,7 @@ void UI_DisplayMenu(void)
         case MENU_SC_REV:
             if(gSubMenuSelection == 0)
             {
-                strcpy(String, "STOP");
+                strcpy(String, "DUR");
             }
             else if(gSubMenuSelection < 81)
             {
@@ -933,13 +933,13 @@ void UI_DisplayMenu(void)
 
         case MENU_S_LIST:
             if (gSubMenuSelection == 0)
-                strcpy(String, "LIST [0]\nNO LIST");
+                strcpy(String, "LISTE [0]\nYOK");
             else if (gSubMenuSelection < 4)
-                sprintf(String, "LIST [%u]", gSubMenuSelection);
+                sprintf(String, "LISTE [%u]", gSubMenuSelection);
             else if (gSubMenuSelection == 4)
-                strcpy(String, "LISTS\n[1, 2, 3]");
+                strcpy(String, "LISTELER\n[1, 2, 3]");
             else if (gSubMenuSelection == 5)
-                strcpy(String, "ALL");
+                strcpy(String, "TUM");
             break;
 
         #ifdef ENABLE_ALARM
@@ -986,7 +986,7 @@ void UI_DisplayMenu(void)
         case MENU_D_LIST:
             gIsDtmfContactValid = DTMF_GetContact((int)gSubMenuSelection - 1, Contact);
             if (!gIsDtmfContactValid)
-                strcpy(String, "NULL");
+                strcpy(String, "YOK");
             else
                 memcpy(String, Contact, 8);
             break;
@@ -1023,7 +1023,7 @@ void UI_DisplayMenu(void)
 #else
             if(!gIsInSubMenu && gUnlockAllTxConfCnt>0 && gUnlockAllTxConfCnt<10)
 #endif
-                strcpy(String, "READ\nMANUAL");
+                strcpy(String, "OKU\nKLAVUZ");
             else
                 strcpy(String, gSubMenu_F_LOCK[gSubMenuSelection]);
             break;
@@ -1117,7 +1117,7 @@ void UI_DisplayMenu(void)
         case MENU_TX_LOCK:
             if(TX_freq_check(gEeprom.VfoInfo[gEeprom.TX_VFO].pTX->Frequency) == 0)
             {
-                strcpy(String, "Inside\nF Lock\nPlan");
+                strcpy(String, "F Lock\nPlaninda");
             }
             else
             {
@@ -1263,7 +1263,7 @@ void UI_DisplayMenu(void)
         char *pPrintStr = String;
 
         if (gSubMenuSelection < 0) {
-            pPrintStr = "NULL";
+            pPrintStr = "YOK";
         } else {
             UI_GenerateChannelStringEx(String, true, gSubMenuSelection);
             pPrintStr = String;
@@ -1308,7 +1308,7 @@ void UI_DisplayMenu(void)
     }
 
     if ((UI_MENU_GetCurrentMenuId() == MENU_R_CTCS || UI_MENU_GetCurrentMenuId() == MENU_R_DCS) && gCssBackgroundScan)
-        UI_PrintString("SCAN", menu_item_x1, menu_item_x2, 4, 8);
+        UI_PrintString("TARA", menu_item_x1, menu_item_x2, 4, 8);
 
 #ifdef ENABLE_DTMF_CALLING
     if (UI_MENU_GetCurrentMenuId() == MENU_D_LIST && gIsDtmfContactValid) {
@@ -1336,7 +1336,7 @@ void UI_DisplayMenu(void)
          UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
          UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation)
     {   // display confirmation
-        char *pPrintStr = (gAskForConfirmation == 1) ? "SURE?" : "WAIT!";
+        char *pPrintStr = (gAskForConfirmation == 1) ? "EMIN?" : "BEKLE!";
         UI_PrintString(pPrintStr, menu_item_x1, menu_item_x2, 5, 8);
     }
 

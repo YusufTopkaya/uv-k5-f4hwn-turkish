@@ -59,7 +59,7 @@ void UI_GenerateChannelStringEx(char *pString, const bool bShowPrefix, const uin
         // BUG here? Prefixed NULLs are allowed
         sprintf(pString, "CH-%03u", ChannelNumber + 1);
     } else if (ChannelNumber == 0xFF) {
-        strcpy(pString, "NULL");
+        strcpy(pString, "YOK");
     } else {
         sprintf(pString, "%03u", ChannelNumber + 1);
     }
@@ -343,7 +343,7 @@ void UI_DisplayPopup(const char *string)
     // }
     // DrawRectangle(9,9, 118,38, true);
     UI_PrintString(string, 9, 118, 2, 8);
-    UI_PrintStringSmallNormal("Press EXIT", 9, 118, 6);
+    UI_PrintStringSmallNormal("CIKIS BAS", 9, 118, 6);
 }
 
 void UI_DisplayClear()

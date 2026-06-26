@@ -1,6 +1,8 @@
 
 #include "bitmaps.h"
 
+#include "logo_bitmap.inc"
+
 // all these images are on their right sides
 // turn your monitor 90-deg anti-clockwise to see the images
 
@@ -373,3 +375,4 @@ const uint8_t BITMAP_CurrentIndicator[8] = {
     0x18
 };
 #endif
+

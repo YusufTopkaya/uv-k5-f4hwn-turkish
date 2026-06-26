@@ -40,8 +40,8 @@ void UI_DisplayReleaseKeys(void)
 #endif
     UI_DisplayClear();
 
-    UI_PrintString("RELEASE", 0, 127, 1, 10);
-    UI_PrintString("ALL KEYS", 0, 127, 3, 10);
+    UI_PrintString("BIRAK", 0, 127, 1, 10);
+    UI_PrintString("TUM TUSLARI", 0, 127, 3, 10);
 
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
@@ -85,14 +85,14 @@ void UI_DisplayWelcome(void)
 
         if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_VOLTAGE)
         {
-            strcpy(WelcomeString0, "VOLTAGE");
+            strcpy(WelcomeString0, "VOLTAJ");
             strcpy(WelcomeString1, WelcomeString2);
         }
         else if(gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_ALL)
         {
             if(strlen(WelcomeString0) == 0 && strlen(WelcomeString1) == 0)
             {
-                strcpy(WelcomeString0, "WELCOME");
+                strcpy(WelcomeString0, "HOSGELDIN");
                 strcpy(WelcomeString1, WelcomeString2);
             }
             else if(strlen(WelcomeString0) == 0 || strlen(WelcomeString1) == 0)
@@ -108,97 +108,47 @@ void UI_DisplayWelcome(void)
         {
             if(strlen(WelcomeString0) == 0)
             {
-                strcpy(WelcomeString0, "WELCOME");
+                strcpy(WelcomeString0, "HOSGELDIN");
             }
 
             if(strlen(WelcomeString1) == 0)
             {
-                strcpy(WelcomeString1, "BIENVENUE");
+                strcpy(WelcomeString1, "HOSGELDIN");
             }
         }
 
-        UI_PrintString(WelcomeString0, 0, 127, 0, 10);
-        UI_PrintString(WelcomeString1, 0, 127, 2, 10);
+#ifdef ENABLE_FEAT_F4HWN
+        if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_ALL)
+        {
+            memcpy(gStatusLine, BITMAP_Logo[0], LCD_WIDTH);
+            for (uint8_t page = 1; page < 8; page++)
+            {
+                memcpy(gFrameBuffer[page - 1], BITMAP_Logo[page], LCD_WIDTH);
+            }
+            ST7565_BlitStatusLine();
+        }
+        else
+#endif
+        {
+            UI_PrintString(WelcomeString0, 0, 127, 0, 10);
+            UI_PrintString(WelcomeString1, 0, 127, 2, 10);
 
 #ifdef ENABLE_FEAT_F4HWN
-        UI_PrintStringSmallNormal(Version, 0, 128, 4);
+            UI_PrintStringSmallNormal(Version, 0, 128, 4);
 
-        UI_DrawLineBuffer(gFrameBuffer, 0, 31, 127, 31, 1); // Be ware, status zone = 8 lines, the rest = 56 ->total 64
+            UI_DrawLineBuffer(gFrameBuffer, 0, 31, 127, 31, 1); // Be ware, status zone = 8 lines, the rest = 56 ->total 64
 
-        for (uint8_t i = 18; i < 110; i++)
-        {
-            gFrameBuffer[4][i] ^= 0xFF;
-        }
+            for (uint8_t i = 18; i < 110; i++)
+            {
+                gFrameBuffer[4][i] ^= 0xFF;
+            }
 
-        sprintf(WelcomeString3, "%s Edition", Edition);
-        UI_PrintStringSmallNormal(WelcomeString3, 0, 127, 6);
-
-        /*
-        #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
-            #if ENABLE_FEAT_F4HWN_RESCUE_OPS > 1
-                UI_PrintStringSmallNormal(Edition, 18, 0, 6);
-                if(gEeprom.MENU_LOCK == true) {
-                    memcpy(gFrameBuffer[6] + 103, BITMAP_Ready, sizeof(BITMAP_Ready));
-                }
-                else
-                {
-                    memcpy(gFrameBuffer[6] + 103, BITMAP_NotReady, sizeof(BITMAP_NotReady));                    
-                }
-            #else
-                UI_PrintStringSmallNormal(Edition, 18, 0, 5);
-                memcpy(gFrameBuffer[5] + 103, BITMAP_Ready, sizeof(BITMAP_Ready));
-                
-                #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
-                    UI_PrintStringSmallNormal("RescueOps", 18, 0, 6);
-                    if(gEeprom.MENU_LOCK == true) {
-                        memcpy(gFrameBuffer[6] + 103, BITMAP_Ready, sizeof(BITMAP_Ready));
-                    }
-                    else
-                    {
-                        memcpy(gFrameBuffer[6] + 103, BITMAP_NotReady, sizeof(BITMAP_NotReady));
-                    }
-                #endif
-            #endif
-        #else
-            UI_PrintStringSmallNormal(Edition, 18, 0, 6);
-            memcpy(gFrameBuffer[6] + 103, BITMAP_Ready, sizeof(BITMAP_Ready));                    
-        #endif
-        */
-
-        /*
-        #ifdef ENABLE_SPECTRUM
-            #ifdef ENABLE_FMRADIO
-                    UI_PrintStringSmallNormal(Based, 0, 127, 5);
-                    UI_PrintStringSmallNormal(Credits, 0, 127, 6);
-            #else
-                    UI_PrintStringSmallNormal("Bandscope  ", 0, 127, 5);
-                    memcpy(gFrameBuffer[5] + 95, BITMAP_Ready, sizeof(BITMAP_Ready));
-
-                    #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
-                        UI_PrintStringSmallNormal("RescueOps  ", 0, 127, 6);
-                        if(gEeprom.MENU_LOCK == true) {
-                            memcpy(gFrameBuffer[6] + 95, BITMAP_Ready, sizeof(BITMAP_Ready));
-                        }
-                    #else
-                        UI_PrintStringSmallNormal("Broadcast  ", 0, 127, 6);
-                    #endif
-            #endif
-        #else
-            #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
-                UI_PrintStringSmallNormal("RescueOps  ", 0, 127, 5);
-                if(gEeprom.MENU_LOCK == true) {
-                    memcpy(gFrameBuffer[5] + 95, BITMAP_Ready, sizeof(BITMAP_Ready));
-                }
-            #else
-                UI_PrintStringSmallNormal("Bandscope  ", 0, 127, 5);
-            #endif
-            UI_PrintStringSmallNormal("Broadcast  ", 0, 127, 6);
-            memcpy(gFrameBuffer[6] + 95, BITMAP_Ready, sizeof(BITMAP_Ready));
-        #endif
-        */
+            sprintf(WelcomeString3, "%s Surum", Edition);
+            UI_PrintStringSmallNormal(WelcomeString3, 0, 127, 6);
 #else
-        UI_PrintStringSmallNormal(Version, 0, 127, 6);
+            UI_PrintStringSmallNormal(Version, 0, 127, 6);
 #endif
+        }
 
         //ST7565_BlitStatusLine();  // blank status line : I think it's useless
         ST7565_BlitFullScreen();

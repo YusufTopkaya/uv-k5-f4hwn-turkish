@@ -261,8 +261,8 @@ void drawBall() {
             drawWall();
 
             isPaused = true;
-            UI_PrintStringSmallBold("GAME", 32, 0, 4);
-            UI_PrintStringSmallBold("OVER", 66, 0, 4);
+            UI_PrintStringSmallBold("OYUN", 32, 0, 4);
+            UI_PrintStringSmallBold("BITTI", 66, 0, 4);
         }
         initRacket();
         initBall();
@@ -382,7 +382,7 @@ static void OnKeyDown(uint8_t key)
         kbd.counter = 0;
         if(isPaused)
         {
-            UI_PrintStringSmallBold("PAUSE", 0, 128, 4);
+            UI_PrintStringSmallBold("DURAKLAT", 0, 128, 4);
         }
         break;
     case KEY_EXIT:
