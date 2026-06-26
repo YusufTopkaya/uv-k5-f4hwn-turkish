@@ -548,38 +548,37 @@ static void UI_PrintMenuLabelSmallClip(const char *pString, uint8_t Line, uint8_
     UI_PrintStringSmallNormal(buf, 0, 0, Line);
 }
 
-/* Continuous left-scroll marquee for long menu labels.
- *
- * The text loops smoothly: it shifts left, leaves the panel, then re-enters
- * from the right after a short blank gap.  Timing uses the existing radio
- * loop counter gFlashLightBlinkCounter (incremented every 10 ms).  The left
- * panel rows are cleared before every draw so that character-gap pixels from
- * the previous frame cannot ghost or overlap. */
 static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t PanelWidth)
 {
     const uint8_t char_pitch = 8;
     const size_t  len        = strlen(pString);
-    const unsigned int total_width = (unsigned int)(len * char_pitch);
+    const unsigned int total_width = len * char_pitch;
 
+    // If it fits completely, clear the background and draw it static
     if (total_width <= PanelWidth)
     {
+        memset(gFrameBuffer[Line + 0], 0, PanelWidth);
+        memset(gFrameBuffer[Line + 1], 0, PanelWidth);
         UI_PrintMenuLabelAt(pString, Line, PanelWidth, 0);
         return;
     }
 
-    const int      gap        = 16;                         // blank gap before re-entry
-    const int      max_offset = (int)(total_width + gap);   // loop length in pixels
-    const uint16_t step_period = 15;                        // one pixel step every ~150 ms
-    const int      offset     = (int)((gFlashLightBlinkCounter / step_period) % max_offset);
+    const int gap = 16;
+    const int max_offset = total_width + gap;
 
-    // Clear the left panel area for this label first.  The 1-pixel character
-    // gaps and the re-entry gap would otherwise leave old framebuffer pixels
-    // behind, causing the scrolling text to ghost or overlap with itself.
+    // SPEED TWEAK: Lowered from 15 to 8 for a faster, smoother scroll
+    const uint16_t step_period = 8;
+    const int offset = (int)((gFlashLightBlinkCounter / step_period) % max_offset);
+
+    // BUG FIX: Clear the specific bounding box to prevent text ghosting/overlapping
     memset(gFrameBuffer[Line + 0], 0, PanelWidth);
     memset(gFrameBuffer[Line + 1], 0, PanelWidth);
 
+    // Draw the first moving copy
     UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset);
-    UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset - (int)total_width - gap);
+
+    // Draw the second copy entering from the right
+    UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset - total_width - gap);
 }
 
 void UI_DisplayMenu(void)
