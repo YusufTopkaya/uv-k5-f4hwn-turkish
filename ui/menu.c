@@ -567,6 +567,12 @@ static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t P
     const uint16_t step_period = 15;              // one pixel step every ~150 ms
     const int offset = (int)((gFlashLightBlinkCounter / step_period) % max_offset);
 
+    // Clear the left panel area for this label first, otherwise the 1-pixel
+    // character gaps and the re-entry gap leave old framebuffer pixels behind
+    // and the scrolling text ghosts/overlaps with previous frames.
+    memset(gFrameBuffer[Line + 0], 0, PanelWidth);
+    memset(gFrameBuffer[Line + 1], 0, PanelWidth);
+
     UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset);
     UI_PrintMenuLabelAt(pString, Line, PanelWidth, offset - total_width - gap);
 }
