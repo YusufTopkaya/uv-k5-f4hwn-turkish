@@ -566,8 +566,8 @@ static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t P
     const int gap = 16;
     const int max_offset = total_width + gap;
 
-    // SPEED TWEAK: Lowered from 15 to 8 for a faster, smoother scroll
-    const uint16_t step_period = 8;
+    // SPEED TWEAK: ~50% faster than the previous 8-tick scroll
+    const uint16_t step_period = 5;
     const int offset = (int)((gFlashLightBlinkCounter / step_period) % max_offset);
 
     // BUG FIX: Clear the specific bounding box to prevent text ghosting/overlapping
