@@ -554,6 +554,26 @@ static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t P
     const size_t  len        = strlen(pString);
     const unsigned int total_width = len * char_pitch;
 
+    // Per-line state so that each label restarts from the beginning when the
+    // menu cursor moves to a different item.
+    static uint16_t  sBaseTick[8];
+    static const char *sLastString[8];
+
+    if (Line >= ARRAY_SIZE(sBaseTick))
+    {
+        if (total_width <= PanelWidth)
+            UI_PrintMenuLabelAt(pString, Line, PanelWidth, 0);
+        return;
+    }
+
+    if (sLastString[Line] != pString)
+    {
+        sLastString[Line] = pString;
+        sBaseTick[Line]   = gFlashLightBlinkCounter;
+    }
+
+    const uint16_t elapsed = gFlashLightBlinkCounter - sBaseTick[Line];
+
     // If it fits completely, clear the background and draw it static
     if (total_width <= PanelWidth)
     {
@@ -568,7 +588,7 @@ static void UI_PrintMenuLabelScroll(const char *pString, uint8_t Line, uint8_t P
 
     // SPEED TWEAK: ~50% faster than the previous 8-tick scroll
     const uint16_t step_period = 5;
-    const int offset = (int)((gFlashLightBlinkCounter / step_period) % max_offset);
+    const int offset = (int)((elapsed / step_period) % max_offset);
 
     // BUG FIX: Clear the specific bounding box to prevent text ghosting/overlapping
     memset(gFrameBuffer[Line + 0], 0, PanelWidth);
