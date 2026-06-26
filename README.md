@@ -34,6 +34,68 @@ Aşağıdaki kaynak dosyalar Türkçeleştirilmiştir:
 
 Ayrıca `ui/menu.h` içindeki `gSubMenu_TXP` dizisi Türkçe güç seviyesi metinlerine uygun şekilde genişletildi.
 
+## Çeviri notları ve kısaltmalar
+
+LCD ekrandaki sınırlı alan yüzünden bazı kelimeler kısaltılmıştır. Aşağıda sık karşılaşılanlar ve açıklamaları verilmiştir.
+
+### Menü başlıkları
+
+| Kısaltma | Açıklama |
+|----------|----------|
+| `Kilit` | Otomatik tuş kilidi |
+| `TXSure` | TX Süre / TOT (Time-Out Timer) |
+| `PilTas` | Pil tasarrufu |
+| `PilGor` | Pil göstergesi |
+| `KanGor` | Kanal göstergesi |
+| `AcMes` | Açılış mesajı |
+| `BLZmn` | Arka ışık zamanı |
+| `BLMin` / `BLMax` | Arka ışık minimum / maksimum seviyesi |
+| `BLTxRx` | Arka ışık TX/RX davranışı |
+| `TXKil` | TX kilidi |
+| `RXModu` | RX modu |
+| `Sql` | Squelch (parazit kısma) |
+| `SetGuc` | Güç seviyesi ayarı |
+| `SetKon` | Kontrast ayarı |
+| `SetTrs` | Ters (invert) ekran ayarı |
+| `SetKil` | Kilit ayarı |
+| `SetMet` | S-meter (sinyal göstergesi) stili ayarı |
+| `SetGUI` | Arayüz yazı boyutu ayarı |
+| `SetZmn` | Zamanlayıcı ayarı |
+| `SetOff` | Uyku gecikmesi ayarı |
+| `SetNFM` | Dar bant (NFM) ayarı |
+| `PilKal` | Pil voltaj kalibrasyonu |
+| `PilTip` | Pil tipi (1600 / 2200 / 3500 mAh) |
+| `Sifir` | Fabrika ayarlarına sıfırlama |
+
+### Alt menü değerleri
+
+| Görünen | Anlamı |
+|---------|--------|
+| `AC` / `KAPALI` | Açık / Kapalı |
+| `GENIS` / `DAR` | Geniş bant / Dar bant |
+| `OZEL` | Özel (kullanıcı) güç seviyesi |
+| `DUS 1` ... `DUS 5` | Düşük güç seviyeleri |
+| `ORTA` | Orta güç |
+| `YUKSEK` | Yüksek güç |
+| `TUM` | Tüm açılış bilgileri (Türk bayrağı logosu modu) |
+| `MESAJ` | Açılış mesajı metni |
+| `VOLTAJ` | Pil voltajı |
+| `SES` | Açılış sesi |
+| `YOK` | Hiçbir şey gösterme |
+
+### Diğer mesajlar
+
+| Görünen | Anlamı |
+|---------|--------|
+| `HOSGELDIN` | Hoşgeldiniz |
+| `BIRAK` | Bırak |
+| `TUM TUSLARI` | Tüm tuşları |
+| `CIKIS BAS` | Çıkış bas |
+| `Turkce Surum` | Türkçe Sürüm |
+
+> [!NOTE]
+> "Kapalı" anlamında kısaltma kullanmak yerine **KAPALI** tam olarak yazılmıştır. Bu değişiklik firmware boyutunu yaklaşık **12 byte** artırmıştır; 64 KB limit içinde çok küçük bir farktır.
+
 ## Türk bayrağı logosu
 
 - `logo_bitmap.inc` dosyası 128×64 piksel monokrom Türk bayrağı bitmap'ini içerir.

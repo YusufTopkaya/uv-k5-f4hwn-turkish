@@ -213,9 +213,9 @@ const char gSubMenu_W_N[][7] =
     "DAR"
 };
 
-const char gSubMenu_OFF_ON[][4] =
+const char gSubMenu_OFF_ON[][7] =
 {
-    "KAP",
+    "KAPALI",
     "AC"
 };
 
