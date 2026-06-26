@@ -18,6 +18,7 @@
 
 #include "driver/eeprom.h"
 #include "driver/st7565.h"
+#include "driver/system.h"
 #include "external/printf/printf.h"
 #include "helper/battery.h"
 #include "settings.h"
@@ -31,6 +32,41 @@
 
 #ifdef ENABLE_FEAT_F4HWN_SCREENSHOT
     #include "screenshot.h"
+#endif
+
+#ifdef ENABLE_FEAT_F4HWN
+/* Apply a simple 2x2 Bayer dither to the boot logo.  level 0 = fully off,
+ * level 1 = 25%, level 2 = 50%, level 3 = 75%, level 4 = fully on.
+ * This lets the logo "fade" in/out on the 1-bit LCD. */
+static void UI_DrawLogoWithFade(uint8_t level)
+{
+    const uint8_t bayer[2][2] = {{0, 2}, {3, 1}};
+
+    for (uint8_t page = 0; page < 8; page++)
+    {
+        uint8_t *dst = (page == 0) ? gStatusLine : gFrameBuffer[page - 1];
+
+        for (uint8_t x = 0; x < LCD_WIDTH; x++)
+        {
+            uint8_t src_byte = BITMAP_Logo[page][x];
+            uint8_t dst_byte = 0;
+
+            for (uint8_t bit = 0; bit < 8; bit++)
+            {
+                if ((src_byte & (1u << bit)) == 0)
+                    continue;
+
+                uint8_t y = (page * 8) + bit;
+                uint8_t v = bayer[y & 1u][x & 1u];
+
+                if (v < level)
+                    dst_byte |= (1u << bit);
+            }
+
+            dst[x] = dst_byte;
+        }
+    }
+}
 #endif
 
 void UI_DisplayReleaseKeys(void)
@@ -121,12 +157,17 @@ void UI_DisplayWelcome(void)
 #ifdef ENABLE_FEAT_F4HWN
         if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_ALL)
         {
-            memcpy(gStatusLine, BITMAP_Logo[0], LCD_WIDTH);
-            for (uint8_t page = 1; page < 8; page++)
+            // Fade the boot logo in, then give it a gentle pulse, leaving it
+            // fully visible for the rest of the boot delay.
+            const uint8_t fade_levels[] = {0, 1, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4};
+
+            for (uint8_t i = 0; i < ARRAY_SIZE(fade_levels); i++)
             {
-                memcpy(gFrameBuffer[page - 1], BITMAP_Logo[page], LCD_WIDTH);
+                UI_DrawLogoWithFade(fade_levels[i]);
+                ST7565_BlitStatusLine();
+                ST7565_BlitFullScreen();
+                SYSTEM_DelayMs(120);
             }
-            ST7565_BlitStatusLine();
         }
         else
 #endif
