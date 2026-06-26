@@ -34,6 +34,7 @@
 #include "settings.h"
 #include "ui/helper.h"
 #include "ui/inputbox.h"
+#include "ui/strings.h"
 #include "ui/main.h"
 #include "ui/ui.h"
 #include "audio.h"
@@ -71,12 +72,12 @@ const int8_t dBmCorrTable[7] = {
 
 const char *VfoStateStr[] = {
        [VFO_STATE_NORMAL]="",
-       [VFO_STATE_BUSY]="MESGUL",
-       [VFO_STATE_BAT_LOW]="PIL DUSUK",
-       [VFO_STATE_TX_DISABLE]="TX KAPALI",
-       [VFO_STATE_TIMEOUT]="SURE DOLDU",
-       [VFO_STATE_ALARM]="ALARM",
-       [VFO_STATE_VOLTAGE_HIGH]="VOLTAJ YUKSEK"
+       [VFO_STATE_BUSY]=STR_MESGUL,
+       [VFO_STATE_BAT_LOW]=STR_PIL_DUSUK,
+       [VFO_STATE_TX_DISABLE]=STR_TX_KAPALI,
+       [VFO_STATE_TIMEOUT]=STR_SURE_DOLDU,
+       [VFO_STATE_ALARM]=STR_ALARM,
+       [VFO_STATE_VOLTAGE_HIGH]=STR_VOLTAJ_YUKSEK
 };
 
 // ***************************************************************************
@@ -275,7 +276,7 @@ void DisplayRSSIBar(const bool now)
     if(RxLine >= 0 && center_line != CENTER_LINE_IN_USE)
     {
         if (RxBlink == 0 || RxBlink == 1) {
-            UI_PrintStringSmallBold("RX", 8, 0, RxLine);
+            UI_PrintStringSmallBold(STR_RX, 8, 0, RxLine);
             if (RxBlink == 1) RxBlink = 2;
         } else {
             for (uint8_t i = 8; i < 24; i++)
@@ -535,7 +536,7 @@ void UI_DisplayMain(void)
     UI_DisplayClear();
 
     if(gLowBattery && !gLowBatteryConfirmed) {
-        UI_DisplayPopup("PIL DUSUK");
+        UI_DisplayPopup(STR_PIL_DUSUK);
         ST7565_BlitFullScreen();
         return;
     }
@@ -544,7 +545,7 @@ void UI_DisplayMain(void)
     if (gEeprom.KEY_LOCK && gKeypadLocked > 0)
     {   // tell user how to unlock the keyboard
         UI_PrintString("UZUN BAS #", 0, LCD_WIDTH, 1, 8);
-        UI_PrintString("KILIT AC",    0, LCD_WIDTH, 3, 8);
+        UI_PrintString(STR_KILIT_AC,    0, LCD_WIDTH, 3, 8);
         ST7565_BlitFullScreen();
         return;
     }
@@ -565,7 +566,7 @@ void UI_DisplayMain(void)
             shift = 5;
         }
         //memcpy(gFrameBuffer[shift] + 2, gFontKeyLock, sizeof(gFontKeyLock));
-        UI_PrintStringSmallBold("KILIDI AC", 12, 0, shift);
+        UI_PrintStringSmallBold(STR_KILIDI_AC, 12, 0, shift);
         //memcpy(gFrameBuffer[shift] + 120, gFontKeyLock, sizeof(gFontKeyLock));
 
         /*
@@ -637,7 +638,7 @@ void UI_DisplayMain(void)
                         shift = 3;
                     }
 
-                    UI_PrintString("ScnRng", 5, 0, line + shift, 8);
+                    UI_PrintString(STR_ARALIK, 5, 0, line + shift, 8);
                     sprintf(String, "%3u.%05u", gScanRangeStart / 100000, gScanRangeStart % 100000);
                     UI_PrintStringSmallNormal(String, 56, 0, line + shift);
                     sprintf(String, "%3u.%05u", gScanRangeStop / 100000, gScanRangeStop % 100000);
@@ -651,7 +652,7 @@ void UI_DisplayMain(void)
                     gScanRangeStart = 0;
                 }
 #else
-                UI_PrintString("ScnRng", 5, 0, line, 8);
+                UI_PrintString(STR_ARALIK, 5, 0, line, 8);
                 sprintf(String, "%3u.%05u", gScanRangeStart / 100000, gScanRangeStart % 100000);
                 UI_PrintStringSmallNormal(String, 56, 0, line);
                 sprintf(String, "%3u.%05u", gScanRangeStop / 100000, gScanRangeStop % 100000);
@@ -756,7 +757,7 @@ void UI_DisplayMain(void)
                 if (activeTxVFO == vfo_num)
                 {   // show the TX symbol
                     mode = VFO_MODE_TX;
-                    UI_PrintStringSmallBold("TX", 8, 0, line);
+                    UI_PrintStringSmallBold(STR_TX, 8, 0, line);
                 }
             }
         }
@@ -779,7 +780,7 @@ void UI_DisplayMain(void)
                     RxBlink = 0;
                 }
 #else
-                UI_PrintStringSmallBold("RX", 8, 0, line);
+                UI_PrintStringSmallBold(STR_RX, 8, 0, line);
 #endif
             }
 #ifdef ENABLE_FEAT_F4HWN
@@ -1301,29 +1302,29 @@ void UI_DisplayMain(void)
 
             if (gSetting_set_gui)
             {
-                const char *bandWidthNames[] = {"W", "N", "N+"};
+                const char *bandWidthNames[] = {"G", "D", "D+"};
                 UI_PrintStringSmallNormal(bandWidthNames[vfoInfo->CHANNEL_BANDWIDTH + narrower], LCD_WIDTH + 80, 0, line + 1);
             }
             else
             {
-                const char *bandWidthNames[] = {"GENIS", "DAR", "DAR+"};
+                const char *bandWidthNames[] = {STR_GENIS, STR_DAR, STR_DAR_PLUS};
                 GUI_DisplaySmallest(bandWidthNames[vfoInfo->CHANNEL_BANDWIDTH + narrower], 91, line == 0 ? 17 : 49, false, true);
             }
         #else
             if (gSetting_set_gui)
             {
-                const char *bandWidthNames[] = {"W", "N"};
+                const char *bandWidthNames[] = {"G", "D"};
                 UI_PrintStringSmallNormal(bandWidthNames[vfoInfo->CHANNEL_BANDWIDTH], LCD_WIDTH + 80, 0, line + 1);
             }
             else
             {
-                const char *bandWidthNames[] = {"GENIS", "DAR"};
+                const char *bandWidthNames[] = {STR_GENIS, STR_DAR};
                 GUI_DisplaySmallest(bandWidthNames[vfoInfo->CHANNEL_BANDWIDTH], 91, line == 0 ? 17 : 49, false, true);
             }
         #endif
 #else
         if (vfoInfo->CHANNEL_BANDWIDTH == BANDWIDTH_NARROW)
-            UI_PrintStringSmallNormal("N", LCD_WIDTH + 70, 0, line + 1);
+            UI_PrintStringSmallNormal("D", LCD_WIDTH + 70, 0, line + 1);
 #endif
 
 #ifdef ENABLE_DTMF_CALLING
@@ -1335,7 +1336,7 @@ void UI_DisplayMain(void)
 #ifndef ENABLE_FEAT_F4HWN
         // show the audio scramble symbol
         if (vfoInfo->SCRAMBLING_TYPE > 0 && gSetting_ScrambleEnable)
-            UI_PrintStringSmallNormal("SCR", LCD_WIDTH + 106, 0, line + 1);
+            UI_PrintStringSmallNormal(STR_KARIS, LCD_WIDTH + 106, 0, line + 1);
 #endif
 
 #ifdef ENABLE_FEAT_F4HWN
@@ -1344,7 +1345,7 @@ void UI_DisplayMain(void)
         {
             if(gMonitor)
             {
-                sprintf(String, "%s", "MONI");
+                strcpy(String, STR_GOZLEM);
             }
             
             if (gSetting_set_gui)
@@ -1367,7 +1368,7 @@ void UI_DisplayMain(void)
         */
         if (isMainVFO) {
            if (gMonitor) {
-                strcpy(String, "MONI");
+                strcpy(String, STR_GOZLEM);
            } else {
                 sprintf(String, "SQL%d", gEeprom.SQUELCH_LEVEL);
            }

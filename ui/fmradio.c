@@ -26,6 +26,7 @@
 #include "settings.h"
 #include "ui/fmradio.h"
 #include "ui/helper.h"
+#include "ui/strings.h"
 #include "ui/inputbox.h"
 #include "ui/ui.h"
 
@@ -35,7 +36,7 @@ void UI_DisplayFM(void)
     char *pPrintStr = String;
     UI_DisplayClear();
 
-    UI_PrintString("FM", 2, 0, 0, 8);
+    UI_PrintString(STR_FM, 2, 0, 0, 8);
 
     sprintf(String, "%d%s-%dM", 
         BK1080_GetFreqLoLimit(gEeprom.FM_Band)/10,
@@ -55,13 +56,13 @@ void UI_DisplayFM(void)
         pPrintStr = "SIL?";
     } else if (gFM_ScanState == FM_SCAN_OFF) {
         if (gEeprom.FM_IsMrMode) {
-            sprintf(String, "MR(CH%02u)", gEeprom.FM_SelectedChannel + 1);
+            sprintf(String, "HAF(CH%02u)", gEeprom.FM_SelectedChannel + 1);
             pPrintStr = String;
         } else {
-            pPrintStr = "VFO";
+            pPrintStr = STR_VFO;
             for (unsigned int i = 0; i < 20; i++) {
                 if (gEeprom.FM_FrequencyPlaying == gFM_Channels[i]) {
-                    sprintf(String, "VFO(CH%02u)", i + 1);
+                    sprintf(String, "%s(CH%02u)", STR_VFO, i + 1);
                     pPrintStr = String;
                     break;
                 }
@@ -71,7 +72,7 @@ void UI_DisplayFM(void)
         sprintf(String, "A-SCAN(%u)", gFM_ChannelPosition + 1);
         pPrintStr = String;
     } else {
-        pPrintStr = "EL-TARA";
+        pPrintStr = STR_EL_TARA;
     }
 
     UI_PrintString(pPrintStr, 0, 127, 3, 10); // memory, vfo, scan

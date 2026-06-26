@@ -28,6 +28,7 @@
 #include "ui/helper.h"
 #include "ui/inputbox.h"
 #include "ui/lock.h"
+#include "ui/strings.h"
 
 static void Render(void)
 {
@@ -37,7 +38,7 @@ static void Render(void)
     memset(gStatusLine,  0, sizeof(gStatusLine));
     UI_DisplayClear();
 
-    UI_PrintString("SIFRE", 0, 127, 1, 10);
+    UI_PrintString(STR_SIFRE, 0, 127, 1, 10);
     for (i = 0; i < 6; i++)
         String[i] = (gInputBox[i] == 10) ? '-' : 'x';
     String[6] = 0;

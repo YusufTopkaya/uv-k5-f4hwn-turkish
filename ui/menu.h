@@ -164,33 +164,33 @@ enum
 extern const uint8_t FIRST_HIDDEN_MENU_ITEM;
 extern const t_menu_item MenuList[];
 
-extern const char        gSubMenu_TXP[8][7];
-extern const char        gSubMenu_SFT_D[3][8];
-extern const char        gSubMenu_W_N[2][7];
-extern const char        gSubMenu_OFF_ON[2][8];
+extern const char * const gSubMenu_TXP[8];
+extern const char * const gSubMenu_SFT_D[3];
+extern const char * const gSubMenu_W_N[2];
+extern const char * const gSubMenu_OFF_ON[2];
 extern const char        gSubMenu_NA[4];
 extern const char        gSubMenu_TOT[11][7];
 extern const char* const gSubMenu_RXMode[4];
 
 #ifdef ENABLE_VOICE
-    extern const char    gSubMenu_VOICE[3][8];
+    extern const char * const gSubMenu_VOICE[3];
 #endif
 extern const char* const gSubMenu_MDF[4];
 #ifdef ENABLE_ALARM
-    extern const char    gSubMenu_AL_MOD[2][5];
+    extern const char * const gSubMenu_AL_MOD[2];
 #endif
 #ifdef ENABLE_DTMF_CALLING
-extern const char        gSubMenu_D_RSP[4][11];
+extern const char * const gSubMenu_D_RSP[4];
 #endif
 
 #ifdef ENABLE_FEAT_F4HWN
     extern const char    gSubMenu_SET_PWR[7][6];
-    extern const char    gSubMenu_SET_PTT[2][8];
-    extern const char    gSubMenu_SET_TOT[4][7];
-    extern const char    gSubMenu_SET_LCK[2][9];
-    extern const char    gSubMenu_SET_MET[2][8];
+    extern const char * const gSubMenu_SET_PTT[2];
+    extern const char * const gSubMenu_SET_TOT[4];
+    extern const char * const gSubMenu_SET_LCK[2];
+    extern const char * const gSubMenu_SET_MET[2];
     #ifdef ENABLE_FEAT_F4HWN_NARROWER
-        extern const char    gSubMenu_SET_NFM[2][9];
+        extern const char * const gSubMenu_SET_NFM[2];
     #endif
     #ifdef ENABLE_FEAT_F4HWN_RESCUE_OPS
         extern const char gSubMenu_SET_KEY[][9];
@@ -199,22 +199,22 @@ extern const char        gSubMenu_D_RSP[4][11];
 
 extern const char* const gSubMenu_PTT_ID[5];
 #ifdef ENABLE_FEAT_F4HWN
-    extern const char        gSubMenu_PONMSG[5][8];
+    extern const char * const gSubMenu_PONMSG[5];
 #else
-    extern const char        gSubMenu_PONMSG[4][8];
+    extern const char * const gSubMenu_PONMSG[4];
 #endif
-extern const char        gSubMenu_ROGER[3][6];
-extern const char        gSubMenu_RESET[2][4];
+extern const char * const gSubMenu_ROGER[3];
+extern const char * const gSubMenu_RESET[2];
 extern const char* const gSubMenu_F_LOCK[F_LOCK_LEN];
-extern const char        gSubMenu_RX_TX[4][6];
-extern const char        gSubMenu_BAT_TXT[3][8];
+extern const char * const gSubMenu_RX_TX[4];
+extern const char * const gSubMenu_BAT_TXT[3];
 extern const char        gSubMenu_BATTYP[3][9];
 
 #ifndef ENABLE_FEAT_F4HWN
-    extern const char        gSubMenu_SCRAMBLER[11][7];
+    extern const char * const gSubMenu_SCRAMBLER[11];
 #endif
 
-typedef struct {char* name; uint8_t id;} t_sidefunction;
+typedef struct {const char* name; uint8_t id;} t_sidefunction;
 extern const uint8_t         gSubMenu_SIDEFUNCTIONS_size;
 extern const t_sidefunction gSubMenu_SIDEFUNCTIONS[];
                          

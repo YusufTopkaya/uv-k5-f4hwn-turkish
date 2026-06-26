@@ -25,6 +25,7 @@
 #include "ui/helper.h"
 #include "ui/welcome.h"
 #include "ui/status.h"
+#include "ui/strings.h"
 #include "version.h"
 #include "bitmaps.h"
 
@@ -40,8 +41,8 @@ void UI_DisplayReleaseKeys(void)
 #endif
     UI_DisplayClear();
 
-    UI_PrintString("BIRAK", 0, 127, 1, 10);
-    UI_PrintString("TUM TUSLARI", 0, 127, 3, 10);
+    UI_PrintString(STR_BIRAK, 0, 127, 1, 10);
+    UI_PrintString(STR_TUM_TUSLARI, 0, 127, 3, 10);
 
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
@@ -85,14 +86,14 @@ void UI_DisplayWelcome(void)
 
         if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_VOLTAGE)
         {
-            strcpy(WelcomeString0, "VOLTAJ");
+            strcpy(WelcomeString0, STR_VOLTAJ);
             strcpy(WelcomeString1, WelcomeString2);
         }
         else if(gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_ALL)
         {
             if(strlen(WelcomeString0) == 0 && strlen(WelcomeString1) == 0)
             {
-                strcpy(WelcomeString0, "HOSGELDIN");
+                strcpy(WelcomeString0, STR_HOSGELDIN);
                 strcpy(WelcomeString1, WelcomeString2);
             }
             else if(strlen(WelcomeString0) == 0 || strlen(WelcomeString1) == 0)
@@ -108,12 +109,12 @@ void UI_DisplayWelcome(void)
         {
             if(strlen(WelcomeString0) == 0)
             {
-                strcpy(WelcomeString0, "HOSGELDIN");
+                strcpy(WelcomeString0, STR_HOSGELDIN);
             }
 
             if(strlen(WelcomeString1) == 0)
             {
-                strcpy(WelcomeString1, "HOSGELDIN");
+                strcpy(WelcomeString1, STR_HOSGELDIN);
             }
         }
 

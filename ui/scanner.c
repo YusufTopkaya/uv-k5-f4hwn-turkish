@@ -22,6 +22,7 @@
 #include "external/printf/printf.h"
 #include "misc.h"
 #include "ui/helper.h"
+#include "ui/strings.h"
 #include "ui/scanner.h"
 
 void UI_DisplayScanner(void)
@@ -67,7 +68,7 @@ void UI_DisplayScanner(void)
             UI_GenerateChannelStringEx(String + 5, gShowChPrefix, gScanChannel);
             pPrintStr = String;
         } else if (gScanCssState < SCAN_CSS_STATE_FOUND) {
-            strcpy(String, "TARA");
+            strcpy(String, STR_TARA);
             memset(String + 4, '.', (gScanProgressIndicator & 7) + 1);
             pPrintStr = String;
         } else if (gScanCssState == SCAN_CSS_STATE_FOUND) {
