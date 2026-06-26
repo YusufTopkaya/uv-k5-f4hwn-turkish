@@ -157,7 +157,7 @@ void UI_DisplayWelcome(void)
 #ifdef ENABLE_FEAT_F4HWN
         if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_ALL)
         {
-            const uint16_t frame_delay_ms = gEeprom.POWER_ON_LOGO_ANIM_SPEED ? 80 : 200;
+            const uint16_t frame_delay_ms = gEeprom.POWER_ON_LOGO_ANIM_SPEED ? 70 : 130;
 
             if (gEeprom.POWER_ON_LOGO_ANIMATION == 0)
             {
