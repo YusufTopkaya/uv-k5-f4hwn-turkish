@@ -1,15 +1,18 @@
-# UV-K5/K6/5R Türkçe Firmware
+# UV-K5/K6/5R Türkçe Firmware (Deneysel Uzun Etiketler)
 
 Bu proje, [armel/uv-k5-firmware-custom](https://github.com/armel/uv-k5-firmware-custom) (F4HWN özelleştirmesi) çatalının Türkçe arayüz ile yerelleştirilmiş halidir.
+
+> [!WARNING]
+> Bu dal (`experimental-long-labels`) **deneyseldir**. Menü etiketleri 6 karakter sınırını aşacak şekilde tam Türkçe karşılıklarıyla uzatılmıştır; sığmayan etiketler sol panelde **kayan yazı (marquee)** olarak gösterilir.
 
 ## Bu fork'ta neler değişti?
 
 - **Tam Türkçe arayüz çevirisi** yapıldı.
 - Açılıştaki sürüm yazısı artık **"Turkce Surum"** olarak görünüyor.
 - Açılış ekranına **tam ekran Türk bayrağı** logosu eklendi (Power-On Message **TÜM** modunda).
-- Menülerde açılabilen kısaltmalar mümkün olan en uzun Türkçe karşılıklarıyla değiştirildi.
-- Birden fazla yerde kullanılan tüm kelimeler tek merkezi tabloda (`ui/strings.h` / `ui/strings.c`) toplanarak dinamik referansla kullanılıyor; böylece çeviri tutarlılığı artırıldı ve gereksiz tekrar azaltıldı.
-- Sol menü paneline sığmayan uzun etiketler artık **kayan yazı** ile gösteriliyor; metin yavaşça kayarak tamamı okunabiliyor.
+- Menü etiketleri mümkün olan en uzun Türkçe karşılıklarıyla değiştirildi.
+- Sol menü paneline sığmayan uzun etiketler **HTML `<marquee>` tarzında sürekli sola kayan yazı** ile gösteriliyor; metin ekrandan çıktıktan sonra sağ taraftan tekrar giriyor.
+- Birden fazla yerde kullanılan tüm kelimeler tek merkezi tabloda (`ui/strings.h` / `ui/strings.c`) toplanarak dinamik referansla kullanılıyor.
 
 > [!NOTE]
 > Radyonun LCD fontu yalnızca 7-bit ASCII karakterleri desteklediği için Türkçe karakterler (ç, ğ, ı, ö, ş, ü, İ) ASCII karşılıklarıyla yazılmıştır. Örneğin:
@@ -24,7 +27,7 @@ Aşağıdaki kaynak dosyalar Türkçeleştirilmiştir:
 
 | Dosya | Açıklama |
 |-------|----------|
-| `ui/menu.c` | Ana menü etiketleri ve alt menü değerleri |
+| `ui/menu.c` / `ui/menu.h` | Ana menü etiketleri, uzun etiket kaydırma ve panel kırpma |
 | `ui/main.c` | Ana ekran / VFO göstergeleri |
 | `ui/welcome.c` | Açılış (welcome) ekranı |
 | `ui/fmradio.c` | FM radyo ekranı |
@@ -35,81 +38,89 @@ Aşağıdaki kaynak dosyalar Türkçeleştirilmiştir:
 | `app/breakout.c` | Breakout oyunu ekranları |
 | `ui/strings.c` / `ui/strings.h` | Ortak Türkçe metin tablosu |
 
-`ui/menu.h` içindeki paylaşılan alt menü dizileri (`gSubMenu_OFF_ON`, `gSubMenu_W_N`, `gSubMenu_TXP`, vb.) artık `ui/strings.c`'deki tek bir kaynağı işaret eden `const char * const` dizileri şeklindedir. Düşük güç seviyeleri `DUSUK 1` … `DUSUK 5` şeklinde dinamik olarak oluşturulur.
+`ui/menu.h`'deki `t_menu_item` yapısı artık etiketleri `const char name[7]` yerine `const char *name` olarak işaret ediyor; böylece 6 karakter sınırını aşan uzun etiketler mümkün oluyor.
+
+## Kayan menü etiketleri
+
+Sol menü paneli 48 piksel genişliğinde (6 büyük karakter). Bu alana sığmayan etiketler için `ui/menu.c`'de `UI_PrintMenuLabelScroll()` fonksiyonu eklendi.
+
+- **Marquee tarzı:** Metin sürekli sola kayar, ekrandan tamamen çıktıktan sonra sağ taraftan tekrar girer.
+- **Hız:** Yaklaşık 150 ms'de bir piksel kayar.
+- **Kırpma:** Metin dikey ayırıcı çizgiyi ve sağ paneli asla ezmez; panel dışında kalan pikseller çizilmez.
+- **Yan etiketler:** Özel menü düzeninde (custom layout) üstteki ve alttaki küçük yazılı etiketler 8 karakterle sınırlandırılır; seçili ortadaki büyük etiket kayar.
 
 ## Çeviri notları ve kısaltmalar
 
-LCD ekrandaki sınırlı alan yüzünden bazı kelimeler hâlâ kısaltılmıştır. Aşağıda menü başlıkları, alt menü değerleri ve diğer mesajlarda kullanılan kısaltmalar ile açıklamaları verilmiştir.
+LCD ekrandaki sınırlı alan yüzünden bazı teknik kısaltmalar korunmuştur. Aşağıda menü başlıkları, alt menü değerleri ve diğer mesajlarda kullanılan terimler ile açıklamaları verilmiştir.
 
 ### Menü başlıkları
 
 | Görünen | Açıklama |
 |---------|----------|
 | `Adim` | Kanal adımı |
-| `Guc` | TX gücü |
+| `TXGucu` | TX gücü |
 | `RxDCS` / `RxCTCS` | Alıcı DCS / CTCSS kodu |
 | `TxDCS` / `TxCTCS` | Verici DCS / CTCSS kodu |
-| `TxODir` | Verici ofset yönü (Shift Direction) |
+| `TxOfsetYon` | Verici ofset yönü (Shift Direction) |
 | `Ofset` | Frekans ofseti |
-| `Bant` | Bant genişliği (Wide / Narrow) |
-| `Karist` | Karıştırıcı (Scrambler) |
-| `Mesgul` | Meşgul kanal kilidi (Busy Channel Lockout) |
-| `Compnd` | Sıkıştırıcı / açıcı (Compander) |
-| `Mod` | Modülasyon (AM/FM) |
-| `TXKil` | TX kilidi |
-| `Ekle1` / `Ekle2` / `Ekle3` | Tarama listesine ekleme |
+| `BantGenis` | Bant genişliği (Wide / Narrow) |
+| `Karistirici` | Karıştırıcı (Scrambler) |
+| `MesgulKilit` | Meşgul kanal kilidi (Busy Channel Lockout) |
+| `Kompander` | Sıkıştırıcı / açıcı (Compander) |
+| `Modulasyon` | Modülasyon (AM/FM) |
+| `TXKiliti` | TX kilidi |
+| `ListeyeEkle1` / `2` / `3` | Tarama listesine ekleme |
 | `Kaydet` / `Sil` | Kanalı kaydet / sil |
-| `Isim` | Kanal ismi |
-| `Liste` / `Liste1` / `Liste2` / `Liste3` | Tarama listeleri |
+| `KanalIsmi` | Kanal ismi |
+| `TaramaList` / `1` / `2` / `3` | Tarama listeleri |
 | `Tarama` | Tarama yönü / modu |
 | `F1Kisa` / `F1Uzun` | F1 tuşu kısa / uzun basış fonksiyonu |
 | `F2Kisa` / `F2Uzun` | F2 tuşu kısa / uzun basış fonksiyonu |
 | `MUzun` | M tuşu uzun basış fonksiyonu |
-| `Kilit` | Otomatik tuş kilidi |
-| `TXSure` | TX Süre / TOT (Time-Out Timer) |
-| `PilTas` | Pil tasarrufu |
-| `PilGor` | Pil göstergesi |
-| `KanGor` | Kanal göstergesi |
-| `Acilis` | Açılış mesajı |
-| `BLZmn` | Arka ışık zamanı |
-| `BLMin` / `BLMax` | Arka ışık minimum / maksimum seviyesi |
-| `BLTxRx` | Arka ışık TX/RX davranışı |
-| `Bip` | Tuş bip sesi |
-| `Roger` | Roger beep |
-| `STE` / `RP STE` | Squelch kuyruk kesme |
-| `1 Ara` | Tek kanal arama |
-| `Alarm` | Alarm modu |
-| `D Dur` | DTMF başlangıç durumu |
-| `DCevap` | DTMF yanıt modu |
-| `DBekle` | DTMF tutma süresi |
-| `DGecik` | DTMF gecikme (pre-load) |
-| `DKodCo` | DTMF kod çözücü |
-| `DListe` | DTMF liste |
-| `DCanli` | DTMF canlı çözücü |
-| `YukKod` / `AsaKod` | Yukarı / Aşağı DTMF kodu |
+| `OtoKilit` | Otomatik tuş kilidi |
+| `TXSuresi` | TX Süre / TOT (Time-Out Timer) |
+| `PilTasarruf` | Pil tasarrufu |
+| `PilGostergesi` | Pil göstergesi |
+| `Mikrofon` | Mikrofon kazancı |
+| `MikrofonBar` | Mikrofon bar göstergesi |
+| `KanalGorunumu` | Kanal göstergesi |
+| `AcilisEkrani` | Açılış mesajı |
+| `ArkaIsikZaman` | Arka ışık zamanı |
+| `ArkaIsikMin` / `ArkaIsikMax` | Arka ışık minimum / maksimum seviyesi |
+| `ArkaIsikTxRx` | Arka ışık TX/RX davranışı |
+| `TusSesi` | Tuş sesi |
+| `SesDili` | Sesli uyarı dili |
+| `RogerBeep` | Roger beep |
+| `KuyrukKes` / `TersKuyruk` | Squelch kuyruk kesme / ters kuyruk |
+| `TekKanalAra` | Tek kanal arama |
+| `AlarmModu` | Alarm modu |
+| `YukariKod` / `AsagiKod` | Yukarı / Aşağı DTMF kodu |
 | `PTT ID` | PTT tanıtma kimliği |
 | `VOX` | Sesle tetikleme |
 | `RXModu` | RX modu (RX Mode) |
-| `Sql` | Squelch (parazit kısma) |
-| `SetGuc` | Güç seviyesi ayarı |
-| `SetPTT` | PTT modu ayarı |
-| `SetTOT` / `SetEOT` | TX / EOT uyarı ayarı |
-| `SetKon` | Kontrast ayarı |
-| `SetTrs` | Ters (invert) ekran ayarı |
-| `SetKil` | Kilit ayarı |
-| `SetMet` | S-meter (sinyal göstergesi) stili ayarı |
-| `SetGUI` | Arayüz yazı boyutu ayarı |
-| `SetZmn` | Zamanlayıcı ayarı |
-| `SetKpt` | Uyku gecikmesi ayarı |
-| `SetNFM` | Dar bant (NFM) ayarı |
-| `FKilit` | Frekans kilidi (F Lock) |
+| `Susturma` | Squelch (parazit kısma) |
+| `GucAyar` | Güç seviyesi ayarı |
+| `PTTAyar` | PTT modu ayarı |
+| `TXSureAyar` / `EOTUyari` | TX / EOT uyarı ayarı |
+| `KontrastAyar` | Kontrast ayarı |
+| `TersAyar` | Ters (invert) ekran ayarı |
+| `KilitAyar` | Kilit ayarı |
+| `MetreAyar` | S-meter (sinyal göstergesi) stili ayarı |
+| `ArayuzAyar` | Arayüz yazı boyutu ayarı |
+| `ZamanAyar` | Zamanlayıcı ayarı |
+| `UykuAyar` | Uyku gecikmesi ayarı |
+| `NFMAyar` | Dar bant (NFM) ayarı |
+| `SesAyar` | Ses ayarı |
+| `TusAyar` | Tuş ayarı |
+| `SistemBilgi` / `PilVoltaji` | Sistem bilgisi / pil voltajı ekranı |
+| `FrekansKilit` | Frekans kilidi (F Lock) |
 | `Tx 200` / `Tx 350` / `Tx 500` | 200 / 350 / 500 MHz TX izni |
-| `350 Ac` | 350 MHz bandı açma |
-| `KarAc` | Karıştırıcıyı açma |
-| `FrKal` | Frekans kalibrasyonu |
-| `PilKal` | Pil voltaj kalibrasyonu |
-| `PilTip` | Pil tipi (1600 / 2200 / 3500 mAh) |
-| `Sifir` | Fabrika ayarlarına sıfırlama |
+| `350MHzAc` | 350 MHz bandı açma |
+| `KaristiriciAc` | Karıştırıcıyı açma |
+| `FrekansKal` | Frekans kalibrasyonu |
+| `PilKalibrasyon` | Pil voltaj kalibrasyonu |
+| `PilTipi` | Pil tipi (1600 / 2200 / 3500 mAh) |
+| `FabrikaSifir` | Fabrika ayarlarına sıfırlama |
 
 ### Alt menü değerleri
 
@@ -167,19 +178,10 @@ Yeni eklenen dosyalar:
 
 Bu tablo sayesinde `KAPALI`, `ACIK`, `YOK`, `TUM`, `TARA`, `DUSUK`, `ORTA`, `YUKSEK`, `GENIS`, `DAR`, `SES`, `GUC`, `MOD`, `PTT`, `VFO`, `RX`, `TX`, `GOZLEM`, `KARIS` gibi birden fazla ekranda geçen kelimeler tek noktadan yönetilir. `Makefile`'a `ui/strings.o` eklendi.
 
-## Kayan menü etiketleri
-
-Sol menü paneli 6 büyük karakterlik (`48 piksel`) bir alana sahip. Bu alana sığmayan etiketler için `ui/menu.c`'de `UI_PrintMenuLabelScroll()` fonksiyonu eklendi.
-
-- Seçili menü öğesinin etiketi panelden uzunsa metin yavaşça sağa kayar, sona ulaştığında geri döner.
-- Kayma hızı yaklaşık **200 ms**'de bir piksel olarak ayarlanmıştır.
-- Sola/sağa git-gel (ping-pong) yaparak hem başlangıcı hem sonunu okumak mümkündür.
-- Kısa etiketler eskisi gibi sabit kalır.
-
 ## Türk bayrağı logosu
 
 - `logo_bitmap.inc` dosyası 128×64 piksel monokrom Türk bayrağı bitmap'ini içerir.
-- Bayrak logosu, menüden **Acilis** seçeneği **TUM** yapıldığında açılışta tam ekran gösterilir.
+- Bayrak logosu, menüden **AcilisEkrani** seçeneği **TUM** yapıldığında açılışta tam ekran gösterilir.
 - **Mesaj** modunda ise metin tabanlı açılış ekranı görünür ve alt kısımda **"Turkce Surum"** yazar.
 - Diğer modlarda (Voltaj, Ses, Yok) ilgili bilgiler görünür.
 

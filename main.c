@@ -189,6 +189,11 @@ void Main(void)
         gMenuListCount++;
     }
 
+    // The logo-animation settings only make sense when the power-on mode is ALL.
+    gMenuVisibleCount = gMenuListCount;
+    if (!gF_LOCK && gEeprom.POWER_ON_DISPLAY_MODE != POWER_ON_DISPLAY_MODE_ALL)
+        gMenuVisibleCount -= 2;
+
     // wait for user to release all butts before moving on
     if (!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) ||
          KEYBOARD_Poll() != KEY_INVALID ||

@@ -1385,6 +1385,12 @@ void APP_TimeSlice10ms(void)
 #endif
     }
 
+    // Redraw the menu periodically so that long scrolling labels actually
+    // animate.  UI_DisplayMenu only builds the framebuffer; the existing
+    // display refresh below sends it to the LCD every 10 ms.
+    if (gScreenToDisplay == DISPLAY_MENU && (gFlashLightBlinkCounter % 5u) == 0u)
+        UI_DisplayMenu();
+
     bool gUpdateDisplayCurrent = gUpdateDisplay;
     bool gUpdateStatusCurrent  = gUpdateStatus;
 
