@@ -1,18 +1,6 @@
-# UV-K5/K6/5R Türkçe Firmware (Deneysel Uzun Etiketler)
+# UV-K5/K6/5R Türkçe Firmware (F4HWN)
 
 Bu proje, [armel/uv-k5-firmware-custom](https://github.com/armel/uv-k5-firmware-custom) (F4HWN özelleştirmesi) çatalının Türkçe arayüz ile yerelleştirilmiş halidir.
-
-> [!WARNING]
-> Bu dal (`experimental-long-labels`) **deneyseldir**. Menü etiketleri 6 karakter sınırını aşacak şekilde tam Türkçe karşılıklarıyla uzatılmıştır; sığmayan etiketler sol panelde **kayan yazı (marquee)** olarak gösterilir.
-
-## Bu fork'ta neler değişti?
-
-- **Tam Türkçe arayüz çevirisi** yapıldı.
-- Açılıştaki sürüm yazısı artık **"Turkce Surum"** olarak görünüyor.
-- Açılış ekranına **tam ekran Türk bayrağı** logosu eklendi (Power-On Message **TÜM** modunda).
-- Menü etiketleri mümkün olan en uzun Türkçe karşılıklarıyla değiştirildi.
-- Sol menü paneline sığmayan uzun etiketler **HTML `<marquee>` tarzında sürekli sola kayan yazı** ile gösteriliyor; metin ekrandan çıktıktan sonra sağ taraftan tekrar giriyor.
-- Birden fazla yerde kullanılan tüm kelimeler tek merkezi tabloda (`ui/strings.h` / `ui/strings.c`) toplanarak dinamik referansla kullanılıyor.
 
 > [!NOTE]
 > Radyonun LCD fontu yalnızca 7-bit ASCII karakterleri desteklediği için Türkçe karakterler (ç, ğ, ı, ö, ş, ü, İ) ASCII karşılıklarıyla yazılmıştır. Örneğin:
@@ -21,26 +9,44 @@ Bu proje, [armel/uv-k5-firmware-custom](https://github.com/armel/uv-k5-firmware-
 > - `Sürüm` → `Surum`
 > - `Hoşgeldin` → `Hosgeldin`
 
-## Çevrilen menüler ve ekranlar
+## 🇹🇷 F4HWN Türkçe Çeviri
 
-Aşağıdaki kaynak dosyalar Türkçeleştirilmiştir:
+Bu sürümde F4HWN firmware'i için **iki farklı Türkçe çeviri seçeneği** bulunmaktadır.
 
-| Dosya | Açıklama |
-|-------|----------|
-| `ui/menu.c` / `ui/menu.h` | Ana menü etiketleri, uzun etiket kaydırma ve panel kırpma |
-| `ui/main.c` | Ana ekran / VFO göstergeleri |
-| `ui/welcome.c` | Açılış (welcome) ekranı |
-| `ui/fmradio.c` | FM radyo ekranı |
-| `ui/aircopy.c` | Air Copy (veri kopyalama) ekranı |
-| `ui/lock.c` | Tuş kilidi ekranı |
-| `ui/helper.c` | Genel yardımcı mesajlar |
-| `ui/scanner.c` | Tarayıcı (scanner) ekranı |
-| `app/breakout.c` | Breakout oyunu ekranları |
-| `ui/strings.c` / `ui/strings.h` | Ortak Türkçe metin tablosu |
+### 📌 Basic
 
-`ui/menu.h`'deki `t_menu_item` yapısı artık etiketleri `const char name[7]` yerine `const char *name` olarak işaret ediyor; böylece 6 karakter sınırını aşan uzun etiketler mümkün oluyor.
+**Basic** sürümünde, F4HWN firmware'indeki metinler mümkün olduğunca birebir Türkçe'ye çevrilmiştir. (Teknik terim ve kısaltmalar korunmuştur.)
 
-## Kayan menü etiketleri
+#### Tarayıcı üzerinden doğrudan yüklemek için:
+
+https://egzumer.github.io/uvtools/?firmwareURL=https://github.com/YusufTopkaya/uv-k5-f4hwn-turkish/releases/download/v0.0.1/f4hwn-basic.packed.bin
+
+---
+
+### 📌 Long-text
+
+**Long-text** sürümünde ise menü metinleri daha açıklayıcı ve anlaşılır olacak şekilde çevrilmiştir. Uzun metinler, menülerde gezinirken kayan (marquee) yazı olarak gösterilir; böylece metnin tamamı okunabilir. Fakat Quansheng telsizlerde kullanılan ekran buna çok uygun olmadığı için ghosting sebepli gözlerini yorabilir.
+
+#### Tarayıcı üzerinden doğrudan yüklemek için:
+
+https://egzumer.github.io/uvtools/?firmwareURL=https://github.com/YusufTopkaya/uv-k5-f4hwn-turkish/releases/download/v0.0.1/f4hwn-longtext.packed.bin
+
+---
+
+### 📋 Değişiklik Geçmişi
+
+**Full Changelog:** https://github.com/YusufTopkaya/uv-k5-f4hwn-turkish
+
+## Bu fork'ta neler değişti?
+
+- **Tam Türkçe arayüz çevirisi** yapıldı.
+- Açılıştaki sürüm yazısı artık **"Turkce Surum"** olarak görünüyor.
+- Açılış ekranına **tam ekran Türk bayrağı** logosu eklendi (Power-On Message **TUM** modunda).
+- **Basic** sürümünde menü etiketleri mümkün olduğunca kısa ve birebir çevrilmiştir.
+- **Long-text** sürümünde menü etiketleri daha açıklayıcı uzun karşılıklarla değiştirilmiş, sol panelde sığmayan etiketler **kayan yazı (marquee)** ile gösterilmektedir.
+- Birden fazla yerde kullanılan tüm kelimeler tek merkezi tabloda (`ui/strings.h` / `ui/strings.c`) toplanarak dinamik referansla kullanılıyor.
+
+## Kayan menü etiketleri (Long-text sürümü)
 
 Sol menü paneli 48 piksel genişliğinde (6 büyük karakter). Bu alana sığmayan etiketler için `ui/menu.c`'de `UI_PrintMenuLabelScroll()` fonksiyonu eklendi.
 
@@ -48,6 +54,9 @@ Sol menü paneli 48 piksel genişliğinde (6 büyük karakter). Bu alana sığma
 - **Hız:** Yaklaşık 150 ms'de bir piksel kayar.
 - **Kırpma:** Metin dikey ayırıcı çizgiyi ve sağ paneli asla ezmez; panel dışında kalan pikseller çizilmez.
 - **Yan etiketler:** Özel menü düzeninde (custom layout) üstteki ve alttaki küçük yazılı etiketler 8 karakterle sınırlandırılır; seçili ortadaki büyük etiket kayar.
+
+> [!WARNING]
+> Quansheng telsizlerdeki STN LCD ekran hızlı hareketli metinlere tam olarak uygun olmadığı için long-text sürümünde ghosting (gölge/iz kalma) ve buna bağlı göz yorgunluğu görülebilir. Bu durum ekranın donanım özelliğinden kaynaklanır.
 
 ## Çeviri notları ve kısaltmalar
 
